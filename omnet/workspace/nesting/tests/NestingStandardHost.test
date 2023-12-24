@@ -1,0 +1,99 @@
+%description:
+Tests the NestingStandardHost and UdpScheduledTrafficApp modules.
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(nesting);
+
+%file: test.ned
+package @TESTNAME@;
+
+import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
+import inet.node.ethernet.EtherSwitch;
+import inet.node.inet.StandardHost;
+import nesting.node.nesting.NestingStandardHost;
+import ned.DatarateChannel;
+
+
+channel cable extends DatarateChannel
+{
+    parameters:
+        delay = 2ns;
+        datarate = 1Gbps;
+}
+
+network Sim
+{
+    parameters:
+        @display("bgb=382,266");
+    submodules:
+        s0: EtherSwitch {
+            @display("p=181,122");
+        }
+        h0: NestingStandardHost {
+            @display("p=83,123");
+        }
+        h1: StandardHost {
+            @display("p=301,54");
+        }
+        h2: StandardHost {
+            @display("p=301,123");
+        }
+        h3: StandardHost {
+            @display("p=301,197");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("is=s;p=63,39");
+        }
+    connections:
+        h0.ethg++ <--> cable <--> s0.ethg++;
+        h1.ethg++ <--> cable <--> s0.ethg++;
+        h2.ethg++ <--> cable <--> s0.ethg++;
+        h3.ethg++ <--> cable <--> s0.ethg++;
+}
+
+%inifile: omnetpp.ini
+[General]
+outputvectormanager-class="omnetpp::envir::SqliteOutputVectorManager"
+outputscalarmanager-class="omnetpp::envir::SqliteOutputScalarManager"
+
+network = Sim
+
+check-signals = true
+record-eventlog = false
+debug-on-errors = true
+result-dir = result_dir
+output-vector-file = result_dir/Sim_vec.sqlite
+output-scalar-file = result_dir/Sim_sca.sqlite
+sim-time-limit = 100ms
+
+**.h0.numApps = 1
+**.h0.app[0].typename = "UdpScheduledTrafficApp"
+**.h0.app[0].trafficGenerator.localPort = 100
+**.h0.app[0].scheduleManager.initialAdminSchedule = xmldoc("datagram_schedule_h0.xml")
+
+**.h{1..3}.numApps = 1
+**.h{1..3}.app[0].typename = "UdpSink"
+**.h{1..3}.app[0].localPort = 100
+
+%file: datagram_schedule_h0.xml
+<datagramSchedule cycleTime="1h">
+    <event payloadSize="500B" destAddress="h1" destPort="100" timeInterval="30us"/>
+    <event payloadSize="600B" destAddress="h2" destPort="100" timeInterval="40us"/>
+</datagramSchedule>
+
+%exitcode: 0
+
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "(module(Sim.**.app[0]) AND name(packetReceived:count)) OR (module(Sim.h0.app[0].trafficGenerator) AND name(packetSent:count))" -F CSV-S -o statistics.csv
+
+%contains: statistics.csv
+Sim.h0.app[0].trafficGenerator,packetSent:count,2
+
+%contains: statistics.csv
+Sim.h1.app[0],packetReceived:count,1
+
+%contains: statistics.csv
+Sim.h2.app[0],packetReceived:count,1
+
+%contains: statistics.csv
+Sim.h3.app[0],packetReceived:count,0

@@ -1,0 +1,22 @@
+<filteringDatabases>
+  <filteringDatabase id="n5">
+    <static>
+      <forward>
+        <multicastAddress ports="0" macAddress="01:00:5e:00:00:01"/>
+        <multicastAddress ports="2" macAddress="01:00:5e:00:00:03"/>
+        <multicastAddress ports="3" macAddress="01:00:5e:00:00:00"/>
+        <multicastAddress ports="3" macAddress="01:00:5e:00:00:02"/>
+      </forward>
+    </static>
+  </filteringDatabase>
+  <filteringDatabase id="n6">
+    <static>
+      <forward>
+        <multicastAddress ports="0" macAddress="01:00:5e:00:00:01"/>
+        <multicastAddress ports="0" macAddress="01:00:5e:00:00:03"/>
+        <multicastAddress ports="1" macAddress="01:00:5e:00:00:00"/>
+        <multicastAddress ports="2" macAddress="01:00:5e:00:00:02"/>
+      </forward>
+    </static>
+  </filteringDatabase>
+</filteringDatabases>

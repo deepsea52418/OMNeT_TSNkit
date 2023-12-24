@@ -1,0 +1,23 @@
+<filteringDatabases>
+	<filteringDatabase id="switch5">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to computer1 to switch6 -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="3" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switch6">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to computer1 to computer1 -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="0" />
+	        	<!-- Forward packets addressed to executor2 to workstation7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-06" port="2" />
+	        	<!-- Forward packets addressed to workstation7 to workstation7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-07" port="3" />	        	
+	        	
+	        </forward>
+	    </static>
+	</filteringDatabase>
+</filteringDatabases>

@@ -1,0 +1,311 @@
+version 2
+run Analytical-0-20171027-11:40:36-11653
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=6, $packetLength=100"
+attr iterationvarsf bitrate=6,packetLength=100-
+attr measurement "$bitrate=6, $packetLength=100"
+attr network Throughput
+attr processid 11653
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+itervar bitrate 6
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 6Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 6 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 1.972873
+attr unit  Mbit
+
+version 2
+run Analytical-2-20171027-11:40:36-11660
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=9, $packetLength=100"
+attr iterationvarsf bitrate=9,packetLength=100-
+attr measurement "$bitrate=9, $packetLength=100"
+attr network Throughput
+attr processid 11660
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 2
+attr seedset 2
+itervar bitrate 9
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 9Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 9 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 2.398801
+attr unit  Mbit
+
+version 2
+run Analytical-4-20171027-11:40:36-11654
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=12, $packetLength=100"
+attr iterationvarsf bitrate=12,packetLength=100-
+attr measurement "$bitrate=12, $packetLength=100"
+attr network Throughput
+attr processid 11654
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 4
+attr seedset 4
+itervar bitrate 12
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 12Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 12 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 2.841918
+attr unit  Mbit
+
+version 2
+run Analytical-6-20171027-11:40:36-11664
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=18, $packetLength=100"
+attr iterationvarsf bitrate=18,packetLength=100-
+attr measurement "$bitrate=18, $packetLength=100"
+attr network Throughput
+attr processid 11664
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 6
+attr seedset 6
+itervar bitrate 18
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 18Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 18 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 3.258656
+attr unit  Mbit
+
+version 2
+run Analytical-8-20171027-11:40:36-11668
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=24, $packetLength=100"
+attr iterationvarsf bitrate=24,packetLength=100-
+attr measurement "$bitrate=24, $packetLength=100"
+attr network Throughput
+attr processid 11668
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 8
+attr seedset 8
+itervar bitrate 24
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 24Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 24 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 3.611738
+attr unit  Mbit
+
+version 2
+run Analytical-10-20171027-11:40:36-11662
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=36, $packetLength=100"
+attr iterationvarsf bitrate=36,packetLength=100-
+attr measurement "$bitrate=36, $packetLength=100"
+attr network Throughput
+attr processid 11662
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 10
+attr seedset 10
+itervar bitrate 36
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 36Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 36 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 3.892944
+attr unit  Mbit
+
+version 2
+run Analytical-12-20171027-11:40:36-11667
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=48, $packetLength=100"
+attr iterationvarsf bitrate=48,packetLength=100-
+attr measurement "$bitrate=48, $packetLength=100"
+attr network Throughput
+attr processid 11667
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 12
+attr seedset 12
+itervar bitrate 48
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 48Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 48 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 4.134367
+attr unit  Mbit
+
+version 2
+run Analytical-14-20171027-11:40:36-11666
+attr configname Analytical
+attr datetime 20171027-11:40:36
+attr experiment Analytical
+attr inifile omnetpp.ini
+attr iterationvars "$bitrate=54, $packetLength=100"
+attr iterationvarsf bitrate=54,packetLength=100-
+attr measurement "$bitrate=54, $packetLength=100"
+attr network Throughput
+attr processid 11666
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 14
+attr seedset 14
+itervar bitrate 54
+itervar packetLength 100
+param *.*Host.ipv4.arpType "\"GlobalARP\""
+param *.*Host.wlan[*].mgmtType "\"Ieee80211MgmtAdhoc\""
+param *.*Host.wlan[*].opMode "\"g(erp)\""
+param *.*Host.wlan[*].bitrate 54Mbps
+param *.*Host.wlan[*].radio.separateReceptionParts true
+param *.*Host.wlan[*].radio.separateTransmissionParts true
+param *.sourceHost.numApps 1
+param *.sourceHost.app[0].typename "\"UDPBasicApp\""
+param *.sourceHost.app[*].destAddresses "\"destinationHost\""
+param *.sourceHost.app[*].destPort 5000
+param *.sourceHost.app[*].messageLength 100byte
+param *.sourceHost.app[*].packetName "\"UDPData-\""
+param *.sourceHost.app[*].startTime 0s
+param *.sourceHost.app[*].sendInterval "100 * 8 / 54 * 1us"
+param *.destinationHost.numApps 1
+param *.destinationHost.app[0].typename "\"UDPSink\""
+param *.destinationHost.app[*].localPort 5000
+
+scalar Throughput "analyticalThroughput" 4.134367
+attr unit  Mbit

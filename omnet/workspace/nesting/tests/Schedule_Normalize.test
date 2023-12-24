@@ -1,0 +1,66 @@
+%description:
+Test the normalize method of nesting::Schedule
+
+%includes:
+#include "nesting/common/schedule/Schedule.h"
+
+using namespace nesting;
+
+%activity:
+// Case 1: We have a schedule with sumTimeIntervals > cycleTime. If we call
+// normalize, entries at the end should be removed/shrinked.
+Schedule<void*> scheduleA;
+scheduleA.setCycleTime(SimTime(40, SIMTIME_S));
+scheduleA.addControlListEntry(SimTime(20, SIMTIME_S), nullptr);
+scheduleA.addControlListEntry(SimTime(30, SIMTIME_S), nullptr);
+scheduleA.addControlListEntry(SimTime(40, SIMTIME_S), nullptr);
+if (scheduleA.isNormalized()) {
+    throw cRuntimeError("isNormalized should return false for scheduleA before normalization!");
+}
+scheduleA.normalize();
+if (scheduleA.getTimeInterval(0) != SimTime(20, SIMTIME_S)) {
+    throw cRuntimeError("Expected time interval #0 of scheduleA to be 20s!");
+}
+if (scheduleA.getTimeInterval(1) != SimTime(20, SIMTIME_S)) {
+    throw cRuntimeError("Expected time interval #1 of scheduleA to be 20s!");
+}
+if (scheduleA.getControlListLength() != 2) {
+    throw cRuntimeError("Expected control list length of scheduleA to be 2!");
+}
+if (!scheduleA.isNormalized()) {
+    throw cRuntimeError("isNormalized should return true for scheduleA after normalization!");
+}
+
+// Case 2: We have a schedule with sumTimeIntervals < cycleTime. If we call
+// normalize the last entry should be extended.
+Schedule<void*> scheduleB;
+scheduleB.setCycleTime(SimTime(100, SIMTIME_S));
+scheduleB.addControlListEntry(SimTime(10, SIMTIME_S), nullptr);
+scheduleB.addControlListEntry(SimTime(20, SIMTIME_S), nullptr);
+if (scheduleB.isNormalized()) {
+    throw cRuntimeError("isNormalized should return false for scheduleB before normalization!");
+}
+scheduleB.normalize();
+if (scheduleB.getTimeInterval(0) != SimTime(10, SIMTIME_S)) {
+    throw cRuntimeError("Expected time interval #0 of scheduleB to be 10s!");
+}
+if (scheduleB.getTimeInterval(1) != SimTime(90, SIMTIME_S)) {
+    throw cRuntimeError("Expected time interval #1 of scheduleB to be 90s!");
+}
+if (!scheduleB.isNormalized()) {
+    throw cRuntimeError("isNormalized should return true for scheduleB after normalization!");
+}
+
+// Case 3: isNormalized() should return true without calling normalize() on an
+// already normalized schedule
+Schedule<void*> scheduleC;
+scheduleC.setCycleTime(SimTime(100, SIMTIME_S));
+scheduleC.addControlListEntry(SimTime(10, SIMTIME_S), nullptr);
+scheduleC.addControlListEntry(SimTime(20, SIMTIME_S), nullptr);
+scheduleC.addControlListEntry(SimTime(30, SIMTIME_S), nullptr);
+scheduleC.addControlListEntry(SimTime(40, SIMTIME_S), nullptr);
+if (!scheduleC.isNormalized()) {
+    throw cRuntimeError("isNormalized should return true for scheduleC!");
+}
+
+%exitcode: 0

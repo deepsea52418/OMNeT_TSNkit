@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<schedules>
+	<defaultcycle>2000us</defaultcycle>
+	<host name="workstation1">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>6400ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:05</dest>
+			<size>100B</size>
+			<flowId>0</flowId>
+		</entry>
+		<entry>
+			<start>4000ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:06</dest>
+			<size>100B</size>
+			<flowId>3</flowId>
+		</entry>
+		<entry>
+			<start>1600ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:07</dest>
+			<size>100B</size>
+			<flowId>6</flowId>
+		</entry>
+	</host>
+	<host name="workstation2">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>800ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:05</dest>
+			<size>100B</size>
+			<flowId>7</flowId>
+		</entry>
+		<entry>
+			<start>5600ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:06</dest>
+			<size>100B</size>
+			<flowId>1</flowId>
+		</entry>
+		<entry>
+			<start>3200ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:07</dest>
+			<size>100B</size>
+			<flowId>4</flowId>
+		</entry>
+	</host>
+	<host name="workstation3">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>2400ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:05</dest>
+			<size>100B</size>
+			<flowId>5</flowId>
+		</entry>
+		<entry>
+			<start>0ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:06</dest>
+			<size>100B</size>
+			<flowId>8</flowId>
+		</entry>
+		<entry>
+			<start>4800ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:07</dest>
+			<size>100B</size>
+			<flowId>2</flowId>
+		</entry>
+	</host>
+	<switch name="switch0">
+		<port id="3">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switch4">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+</schedules>

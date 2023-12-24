@@ -1,0 +1,7 @@
+<config>
+  <interface hosts="**" address="10.x.x.x" netmask="255.x.x.x"/>
+  <multicast-group hosts="n3" address="224.0.0.0"/>
+  <multicast-group hosts="n0" address="224.0.0.1"/>
+  <multicast-group hosts="n4" address="224.0.0.2"/>
+  <multicast-group hosts="n2" address="224.0.0.3"/>
+</config>

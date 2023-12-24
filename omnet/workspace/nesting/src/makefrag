@@ -1,0 +1,2 @@
+MSGC:=$(MSGC) --msg4
+COPTS += -std=c++14 -Wall

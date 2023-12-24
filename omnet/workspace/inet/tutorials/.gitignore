@@ -1,0 +1,6 @@
+.qtenvrc
+.tkenvrc
+.tkenvlog
+.cmdenv-log
+**/results/*
+*/cache/*

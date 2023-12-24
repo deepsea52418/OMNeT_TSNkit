@@ -1,0 +1,22 @@
+<filteringDatabases>
+	<filteringDatabase id="switchA">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotArm to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="3" />
+	        	<!-- Forward packets addressed to backupServer to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-05" port="3" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchB">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotArm to robotArm -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="0" />
+	        	<!-- Forward packets addressed to backupServer to backupServer -->
+	        	<individualAddress macAddress="00-00-00-00-00-05" port="1" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+</filteringDatabases>

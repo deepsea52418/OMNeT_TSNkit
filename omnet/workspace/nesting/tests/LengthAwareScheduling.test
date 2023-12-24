@@ -1,0 +1,252 @@
+%description:
+Test topology consists of four hosts h0, h1, h2, h3 and one switch s0:
+
+  h0    h1
+    \  /
+     s0
+    /  \
+  h2    h3
+
+To test length-aware scheduling. We schedule a flow (h0, h1) with 100B
+payload. If we assume 2us processing delay we get an upper bound of
+2 * (100+30)*8/1e9s + 2e-6s = 4.08e-6s = 4.08us for the end-to-end delay.
+
+For the test we introduce another flow (h2, h3) with best-effort traffic that
+can effect the time-sensitive flow if length-aware scheduling isn't working
+correctly. We use 1kB of payload and send with 1GBit/s.
+
+The test will pass if every packet from the time-sensitive flow (h0, h1) is
+transmitted exactly within the lower bound for end-to-end delay.
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(nesting);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.node.ethernet.VlanEtherSwitchPreemptable;
+import nesting.node.ethernet.VlanEtherHostSched;
+import nesting.node.ethernet.VlanEtherHostQ;
+
+network Sim
+{
+    parameters:
+        @display("bgb=189.63,86");
+    submodules:
+        s0: VlanEtherSwitchPreemptable {
+            parameters:
+                @display("p=95,41");
+            gates:
+                ethg[4];
+        }
+        h0: VlanEtherHostSched {
+            @display("p=39.56,21.93");
+        }
+        h1: VlanEtherHostSched {
+            @display("p=153.51001,21.93");
+        }
+        h2: VlanEtherHostQ {
+            @display("p=39.56,61.06");
+        }
+        h3: VlanEtherHostQ {
+            @display("p=153.51001,61.06");
+        }
+    connections:
+        h0.ethg$o --> {  delay = 0s; datarate = 1Gbps; } --> s0.ethg$i[0];
+        h1.ethg$o --> {  delay = 0s; datarate = 1Gbps; } --> s0.ethg$i[1];
+        s0.ethg$o[0] --> {  delay = 0s; datarate = 1Gbps; } --> h0.ethg$i;
+        s0.ethg$o[1] --> {  delay = 0s; datarate = 1Gbps; } --> h1.ethg$i;
+        s0.ethg$o[2] --> {  delay = 0s; datarate = 1Gbps; } --> h2.ethg$i;
+        h2.ethg$o --> {  delay = 0s; datarate = 1Gbps; } --> s0.ethg$i[2];
+        s0.ethg$o[3] --> {  delay = 0s; datarate = 1Gbps; } --> h3.ethg$i;
+        h3.ethg$o --> {  delay = 0s; datarate = 1Gbps; } --> s0.ethg$i[3];
+}
+
+%file: routing.xml
+<filteringDatabases>
+  <filteringDatabase id="s0">
+    <static>
+      <forward>
+        <!-- time-sensitive stream to h2 -->
+        <multicastAddress ports="1" macAddress="01:00:00:00:00:01"/>
+        <!-- default routes -->
+        <individualAddress port="0" macAddress="00:00:00:00:00:10"/>
+        <individualAddress port="1" macAddress="00:00:00:00:00:11"/>
+        <individualAddress port="2" macAddress="00:00:00:00:00:12"/>
+        <individualAddress port="3" macAddress="00:00:00:00:00:13"/>
+      </forward>
+    </static>
+  </filteringDatabase>
+</filteringDatabases>
+
+%file: schedule.xml
+<schedules>
+  <defaultcycle>1s</defaultcycle>
+  <host name="h0">
+    <cycle>100us</cycle>
+    <entry>
+      <start>0ns</start>
+      <queue>7</queue>
+      <dest>01:00:00:00:00:01</dest>
+      <size>100B</size>
+      <flowId>1</flowId>
+    </entry>
+  </host>
+  <switch name="s0">
+    <port id="1">
+      <schedule cycleTime="100000ns">
+        <entry>
+          <length>3040ns</length>
+          <bitvector>01111111</bitvector>
+        </entry>
+        <entry>
+          <length>1136ns</length>
+          <bitvector>10000000</bitvector>
+        </entry>
+        <entry>
+          <length>95824ns</length>
+          <bitvector>01111111</bitvector>
+        </entry>
+      </schedule>
+    </port>
+  </switch>
+</schedules>
+
+%inifile: omnetpp.ini
+[General]
+outputvectormanager-class="omnetpp::envir::SqliteOutputVectorManager"
+outputscalarmanager-class="omnetpp::envir::SqliteOutputScalarManager"
+
+network = Sim
+
+check-signals = true
+record-eventlog = false
+debug-on-errors = true
+result-dir = result_dir
+output-vector-file = result_dir/Sim_vec.sqlite
+output-scalar-file = result_dir/Sim_sca.sqlite
+sim-time-limit = 100ms
+
+# Disable all unecessary recordings
+Sim.h1.trafGenApp.scalar-recording = true
+Sim.h1.trafGenApp.vector-recording = true
+
+# Debug
+**.displayAddresses = true
+
+**.oscillator.frequency = 1GHz
+
+# MAC Addresses
+**.h0.eth.address = "00:00:00:00:00:10"
+**.h1.eth.address = "00:00:00:00:00:11"
+**.h2.eth.address = "00:00:00:00:00:12"
+**.h3.eth.address = "00:00:00:00:00:13"
+
+# Switches
+**.s0.processingDelay.delay = 2us
+
+**.filteringDatabase.database = xmldoc("routing.xml", "/filteringDatabases/")
+
+**.s0.eth[1].queue.gateController.initialSchedule = xmldoc("schedule.xml", "/schedules/switch[@name='s0']/port[@id='1']/schedule")
+**.gateController.enableHoldAndRelease = false
+**.eth[*].queuing.tsAlgorithms[0].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[1].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[2].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[3].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[4].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[5].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[6].typename = "StrictPriority"
+**.eth[*].queuing.tsAlgorithms[7].typename = "StrictPriority"
+
+# Buffer capacity of queues
+**.queues[*].bufferCapacity = 363360b
+
+# Scheduled traffic
+**.h0.trafGenSchedApp.initialSchedule = xmldoc("schedule.xml")
+**.h1.trafGenSchedApp.initialSchedule = xmldoc("schedule.xml")
+
+# Best effort stream
+Sim.h2.trafGenApp.sendInterval = 8.336us
+Sim.h2.trafGenApp.packetLength = 1kB
+Sim.h2.trafGenApp.startTime = 0
+Sim.h2.trafGenApp.stopTime = 1s
+Sim.h2.trafGenApp.numPacketsPerBurst = 1
+Sim.h2.trafGenApp.destAddress = "00:00:00:00:00:13"
+
+Sim.h3.trafGenApp.sendInterval = 10s
+Sim.h3.trafGenApp.packetLength = 1kB
+Sim.h3.trafGenApp.numPacketsPerBurst = 0
+Sim.h3.trafGenApp.destAddress = "00:00:00:00:00:11"
+
+%file: evaluate_test.py
+#!/bin/env python3
+import csv
+
+def loadScalar(path):
+    with open(path) as file:
+        csv_reader = csv.reader(file)
+        row_index = 0
+        for row in csv_reader:
+            if row_index == 1:
+                return row[4]
+            row_index += 1
+    raise Exception("Failed to parse scalar file {}.".format(path))
+
+if __name__ == "__main__":
+    count_pkt_sent_h0 = int(loadScalar("result_dir/countPktSent_h0.csv"))
+    count_pkt_rcvd_h1 = int(loadScalar("result_dir/countPktRcvd_h1.csv"))
+    count_pkt_sent_h2 = int(loadScalar("result_dir/countPktSent_h2.csv"))
+    count_pkt_rcvd_h3 = int(loadScalar("result_dir/countPktRcvd_h3.csv"))
+    max_delay_h0_h1 = float(loadScalar("result_dir/maxPktRcvdDelay_h1.csv"))
+
+    test_pkt_sent_h0_greater_equal_1k = "passed" if count_pkt_sent_h0 >= 1e3 else "failed"
+    test_pkt_rcvd_h1_greater_equal_1k = "passed" if count_pkt_rcvd_h1 >= 1e3 else "failed"
+    test_pkt_sent_h2_greater_equal_10k = "passed" if count_pkt_sent_h2 >= 10e3 else "failed"
+    test_pkt_rcvd_h3_greater_equal_10k = "passed" if count_pkt_rcvd_h3 >= 10e3 else "failed"
+
+    lower_bound_delay_h0_h1 = 4.08e-6
+    test_max_delay_less_or_equal_lower_bound_h0_h1 = "passed" if max_delay_h0_h1 <= lower_bound_delay_h0_h1 else "failed"
+
+    file = open("test_evaluation.txt", "w")
+
+    file.write("# Statistics\n")
+    file.write("count_pkt_sent_h0 = {}\n".format(count_pkt_sent_h0))
+    file.write("count_pkt_rcvd_h1 = {}\n".format(count_pkt_rcvd_h1))
+    file.write("count_pkt_sent_h2 = {}\n".format(count_pkt_sent_h2))
+    file.write("count_pkt_rcvd_h3 = {}\n".format(count_pkt_rcvd_h3))
+    file.write("max_delay_h0_h1 = {}\n".format(max_delay_h0_h1))
+    file.write("lower_bound_delay_h0_h1 = {}\n".format(lower_bound_delay_h0_h1))
+    file.write("\n")
+    file.write("# Test results\n")
+    file.write("test_pkt_sent_h0_greater_equal_1k = {}\n".format(test_pkt_sent_h0_greater_equal_1k))
+    file.write("test_pkt_rcvd_h1_greater_equal_1k = {}\n".format(test_pkt_rcvd_h1_greater_equal_1k))
+    file.write("test_pkt_sent_h2_greater_equal_10k = {}\n".format(test_pkt_sent_h2_greater_equal_10k))
+    file.write("test_pkt_rcvd_h3_greater_equal_10k = {}\n".format(test_pkt_rcvd_h3_greater_equal_10k))
+    file.write("test_max_delay_less_or_equal_lower_bound_h0_h1 = {}\n".format(test_max_delay_less_or_equal_lower_bound_h0_h1))
+
+    file.close()    
+
+%exitcode: 0
+
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "module(Sim.h0.trafGenSchedApp) AND name(pktSent:count)" -o result_dir/countPktSent_h0.csv -F CSV-S
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "module(Sim.h1.trafGenSchedApp) AND name(pktRcvd:count)" -o result_dir/countPktRcvd_h1.csv -F CSV-S
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "module(Sim.h1.trafGenSchedApp) AND name(pktRcvdDelay:max)" -o result_dir/maxPktRcvdDelay_h1.csv -F CSV-S
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "module(Sim.h2.trafGenApp) AND name(packetSent:count)" -o result_dir/countPktSent_h2.csv -F CSV-S
+%postrun-command: scavetool x result_dir/Sim_sca.sqlite -f "module(Sim.h3.trafGenApp) AND name(packetReceived:count)" -o result_dir/countPktRcvd_h3.csv -F CSV-S
+%postrun-command: python3 evaluate_test.py
+
+%contains: test_evaluation.txt
+test_pkt_sent_h0_greater_equal_1k = passed
+
+%contains: test_evaluation.txt
+test_pkt_rcvd_h1_greater_equal_1k = passed
+
+%contains: test_evaluation.txt
+test_pkt_sent_h2_greater_equal_10k = passed
+
+%contains: test_evaluation.txt
+test_pkt_rcvd_h3_greater_equal_10k = passed
+
+%contains: test_evaluation.txt
+test_max_delay_less_or_equal_lower_bound_h0_h1 = passed

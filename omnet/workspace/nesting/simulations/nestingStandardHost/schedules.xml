@@ -1,0 +1,64 @@
+<schedule>
+  <stream id="0">
+    <datagramSchedule baseTime="0ns" cycleTime="1000000ns">
+      <event payloadSize="236B" destAddress="224.0.0.0" destPort="8" pcp="7" timeInterval="1000000ns"/>
+    </datagramSchedule>
+  </stream>
+  <stream id="1">
+    <datagramSchedule baseTime="0ns" cycleTime="1000000ns">
+      <event payloadSize="236B" destAddress="224.0.0.2" destPort="24" pcp="7" timeInterval="1000000ns"/>
+    </datagramSchedule>
+  </stream>
+  <switch name="n5">
+    <port id="3">
+      <schedule baseTime="0ns" cycleTime="1000000ns">
+        <entry>
+          <length>5000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+        <entry>
+          <length>5000ns</length>
+          <bitvector>00000001</bitvector>
+        </entry>
+        <entry>
+          <length>990000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+      </schedule>
+    </port>
+  </switch>
+  <switch name="n6">
+    <port id="1">
+      <schedule baseTime="0ns" cycleTime="1000000ns">
+        <entry>
+          <length>5000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+        <entry>
+          <length>5000ns</length>
+          <bitvector>00000001</bitvector>
+        </entry>
+        <entry>
+          <length>990000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+      </schedule>
+    </port>
+    <port id="2">
+      <schedule baseTime="0ns" cycleTime="1000000ns">
+        <entry>
+          <length>5000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+        <entry>
+          <length>5000ns</length>
+          <bitvector>00000001</bitvector>
+        </entry>
+        <entry>
+          <length>990000ns</length>
+          <bitvector>11111110</bitvector>
+        </entry>
+      </schedule>
+    </port>
+  </switch>
+</schedule>

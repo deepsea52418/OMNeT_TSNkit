@@ -1,0 +1,155 @@
+<filteringDatabases>
+	<filteringDatabase id="switchA">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotArm to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="2" />
+	        	<!-- Forward packets addressed to robotArm to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="1" />
+	        	
+	        	<!-- Forward packets addressed to backupServer to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="2" />
+	        	<!-- Forward packets addressed to backupServer to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="1" />
+	        	
+	        	<!-- Forward packets addressed to robotController to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="2" />
+	        	<!-- Forward packets addressed to robotController to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="1" />
+	        	
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchB">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to workstation1 to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="0" />
+	        	<!-- Forward packets addressed to workstation1 to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="1" />
+	        	<!-- Forward packets addressed to workstation1 to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="2" />
+
+	        	
+	        	<!-- Forward packets addressed to robotArm to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="0" />
+	        	<!-- Forward packets addressed to robotArm to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="1" />
+	        	<!-- Forward packets addressed to robotArm to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="2" />
+	        	
+	        	<!-- Forward packets addressed to backupServer to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="0" />
+	        	<!-- Forward packets addressed to backupServer to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="1" />
+	        	<!-- Forward packets addressed to backupServer to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="2" />
+	        	
+	        	<!-- Forward packets addressed to robotController to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="0" />
+	        	<!-- Forward packets addressed to robotController to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="1" />
+	        	<!-- Forward packets addressed to robotController to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="2" />
+	        	
+	        	
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchC">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotArm to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="0" />
+	        	<!-- Forward packets addressed to robotArm to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="1" />
+	        	
+	        	<!-- Forward packets addressed to workstation1 to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="0" />
+	        	<!-- Forward packets addressed to workstation1 to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="1" />
+	        	
+	        	<!-- Forward packets addressed to robotController to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="0" />
+	        	<!-- Forward packets addressed to robotController to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="1" />
+	        	
+	        	
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchD">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotArm to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="1" />
+	        	<!-- Forward packets addressed to robotArm to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="2" />
+	        	
+	        	<!-- Forward packets addressed to workstation1 to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="1" />
+	        	<!-- Forward packets addressed to workstation1 to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="2" />
+	        	
+	        	<!-- Forward packets addressed to backupServer to switchA -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="1" />
+	        	<!-- Forward packets addressed to backupServer to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="2" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchE">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to workstation1 to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="0" />
+	        	<!-- Forward packets addressed to workstation1 to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="1" />
+	        	<!-- Forward packets addressed to workstation1 to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="2" />
+
+	        	
+	        	<!-- Forward packets addressed to robotArm to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="0" />
+	        	<!-- Forward packets addressed to robotArm to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="1" />
+	        	<!-- Forward packets addressed to robotArm to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-04" port="2" />
+	        	
+	        	<!-- Forward packets addressed to backupServer to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="0" />
+	        	<!-- Forward packets addressed to backupServer to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="1" />
+	        	<!-- Forward packets addressed to backupServer to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="2" />
+	        	
+	        	<!-- Forward packets addressed to robotController to switchD -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="0" />
+	        	<!-- Forward packets addressed to robotController to switchB -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="1" />
+	        	<!-- Forward packets addressed to robotController to switchF -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="2" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switchF">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to robotController to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="1" />
+	        	<!-- Forward packets addressed to robotController to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="2" />
+	        	
+	        	<!-- Forward packets addressed to workstation1 to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="1" />
+	        	<!-- Forward packets addressed to workstation1 to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="2" />
+	        	
+	        	<!-- Forward packets addressed to backupServer to switchE -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="1" />
+	        	<!-- Forward packets addressed to backupServer to switchC -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="2" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+</filteringDatabases>

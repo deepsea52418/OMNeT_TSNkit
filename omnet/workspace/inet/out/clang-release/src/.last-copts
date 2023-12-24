@@ -1,0 +1,1 @@
+-O3 -DNDEBUG=1 -MMD -MP -MF .d  -fPIC  -Wno-deprecated-register -Wno-unused-function -fno-omit-frame-pointer -DHAVE_SWAPCONTEXT -DXMLPARSER=libxml -DPREFER_QTENV -DWITH_QTENV -DWITH_PARSIM -DWITH_NETBUILDER -DWITH_OSG -DWITH_OSGEARTH  -DINET_EXPORT -I. -I/home/tsn/omnetpp-5.6.1/include

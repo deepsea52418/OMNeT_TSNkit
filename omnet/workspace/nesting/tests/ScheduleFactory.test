@@ -1,0 +1,69 @@
+%description:
+Test for parsing GateSchedule and DatagramSchedule XML files.
+
+%includes:
+#include "nesting/common/schedule/ScheduleFactory.h"
+#include "nesting/common/TestUtil.h"
+using namespace nesting;
+
+#include "inet/common/packet/Packet.h"
+#include "inet/networklayer/common/L3AddressResolver.h"
+using namespace inet;
+
+#include <memory>
+
+%file: test.ned
+simple Test
+{
+    @isNetwork(true);
+    xml gateSchedule = xmldoc("gateSchedule.xml");
+    xml datagramSchedule = xmldoc("datagramSchedule.xml");
+}
+
+%activity:
+std::shared_ptr<Schedule<GateBitvector>> gateSchedule(nesting::ScheduleFactory::createGateSchedule(par("gateSchedule")));
+ASSERT_NOT_EQUAL(gateSchedule, nullptr);
+ASSERT_EQUAL(gateSchedule->getControlListLength(), 2);
+ASSERT_EQUAL(gateSchedule->getBaseTime(), SimTime(3, SIMTIME_US));
+ASSERT_EQUAL(gateSchedule->getCycleTime(), SimTime(100, SIMTIME_US));
+ASSERT_EQUAL(gateSchedule->getCycleTimeExtension(), SimTime(50, SIMTIME_US));
+ASSERT_EQUAL(gateSchedule->getScheduledObject(0), GateBitvector("01111111"));
+ASSERT_EQUAL(gateSchedule->getTimeInterval(0), SimTime(90, SIMTIME_US));
+ASSERT_EQUAL(gateSchedule->getScheduledObject(1), GateBitvector("10000000"));
+ASSERT_EQUAL(gateSchedule->getTimeInterval(1), SimTime(10, SIMTIME_US));
+
+std::shared_ptr<Schedule<SendDatagramEvent>> datagramSchedule(nesting::ScheduleFactory::createDatagramSchedule(par("datagramSchedule")));
+ASSERT_NOT_EQUAL(datagramSchedule, nullptr);
+ASSERT_EQUAL(datagramSchedule->getControlListLength(), 2);
+ASSERT_EQUAL(datagramSchedule->getBaseTime(), SimTime(3, SIMTIME_US));
+ASSERT_EQUAL(datagramSchedule->getCycleTime(), SimTime(100, SIMTIME_US));
+ASSERT_EQUAL(datagramSchedule->getCycleTimeExtension(), SimTime(50, SIMTIME_US));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).getPayloadSize(), B(1024));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).getDestAddress(), L3AddressResolver().resolve("198.162.0.42"));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).getDestPort(), 10);
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).getPriorityCodePoint(), 7);
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).isDropEligible(), true);
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(0).getVlanId(), 2);
+ASSERT_EQUAL(datagramSchedule->getTimeInterval(0), SimTime(80, SIMTIME_US));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).getPayloadSize(), B(1000));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).getDestAddress(), L3AddressResolver().resolve("198.162.0.43"));
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).getDestPort(), 11);
+// If no value for PCP, DE, VID is provided, default values should be used.
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).getPriorityCodePoint(), SendDatagramEvent().getPriorityCodePoint());
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).isDropEligible(), SendDatagramEvent().isDropEligible());
+ASSERT_EQUAL(datagramSchedule->getScheduledObject(1).getVlanId(), SendDatagramEvent().getVlanId());
+ASSERT_EQUAL(datagramSchedule->getTimeInterval(1), SimTime(20, SIMTIME_US));
+
+%file: gateSchedule.xml
+<gateSchedule baseTime="3us" cycleTime="100us" cycleTimeExtension="50us">
+    <event gateStates="01111111" timeInterval="90us"/>
+    <event gateStates="10000000" timeInterval="10us"/>
+</gateSchedule>
+
+%file: datagramSchedule.xml
+<datagramSchedule baseTime="3us" cycleTime="100us" cycleTimeExtension="50us">
+    <event payloadSize="1024B" destAddress="198.162.0.42" destPort="10" pcp="7" de="true" vid="2" timeInterval="80us"/>
+    <event payloadSize="1kB" destAddress="198.162.0.43" destPort="11" timeInterval="20us"/>
+</datagramSchedule>
+
+%exitcode: 0

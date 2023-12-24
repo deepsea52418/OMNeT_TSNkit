@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<schedules>
+	<defaultcycle>2000us</defaultcycle>
+	<host name="sensor0">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="sensor4">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="sensor10">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<switch name="switch0">
+		<port id="3">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2000us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switch4">
+		<port id="1">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2000us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+</schedules>

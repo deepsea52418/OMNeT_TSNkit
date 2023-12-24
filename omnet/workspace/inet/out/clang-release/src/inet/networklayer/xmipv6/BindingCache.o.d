@@ -1,0 +1,31 @@
+../out/clang-release/src/inet/networklayer/xmipv6/BindingCache.o: \
+  /home/tsn/omnetpp-5.6.1/include/omnetpp.h \
+  /home/tsn/omnetpp-5.6.1/workspace/inet/src/inet/common/precompiled.h \
+  /home/tsn/omnetpp-5.6.1/workspace/inet/src/inet/common/precompiled_release.h \
+  inet/networklayer/xmipv6/BindingCache.cc \
+  inet/networklayer/xmipv6/BindingCache.h inet/common/INETDefs.h \
+  inet/common/precompiled_release.h inet/opp_defines.h inet/features.h \
+  inet/common/Compat.h inet/common/InitStages.h \
+  inet/networklayer/contract/ipv6/Ipv6Address.h
+
+/home/tsn/omnetpp-5.6.1/workspace/inet/src/inet/common/precompiled.h:
+
+/home/tsn/omnetpp-5.6.1/workspace/inet/src/inet/common/precompiled_release.h:
+
+inet/networklayer/xmipv6/BindingCache.cc:
+
+inet/networklayer/xmipv6/BindingCache.h:
+
+inet/common/INETDefs.h:
+
+inet/common/precompiled_release.h:
+
+inet/opp_defines.h:
+
+inet/features.h:
+
+inet/common/Compat.h:
+
+inet/common/InitStages.h:
+
+inet/networklayer/contract/ipv6/Ipv6Address.h:

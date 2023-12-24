@@ -1,0 +1,93 @@
+%description:
+Smoke test for the basic forwarding capabilities of the NESTING switch
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(nesting);
+
+%file: test.ned
+package @TESTNAME@;
+
+import ned.DatarateChannel;
+import nesting.node.ethernet.VlanEtherHostQ;
+import nesting.node.ethernet.VlanEtherHostSched;
+import nesting.node.ethernet.VlanEtherSwitchPreemptable;
+
+network Test
+{
+    types:
+        channel C extends DatarateChannel
+        {
+            delay = 0.1us;
+            datarate = 1Gbps;
+        }
+    submodules:
+        s1: VlanEtherSwitchPreemptable;
+        h1: VlanEtherHostQ;
+        h2: VlanEtherHostSched;
+        h3: VlanEtherHostQ;
+        h4: VlanEtherHostQ;
+    connections:
+        s1.ethg++ <--> C <--> h1.ethg;
+        s1.ethg++ <--> C <--> h2.ethg;
+        s1.ethg++ <--> C <--> h3.ethg;
+        s1.ethg++ <--> C <--> h4.ethg;
+}
+
+%file: fdb.xml
+<?xml version="1.0" ?>
+<filteringDatabases>
+	<filteringDatabase id="s1">
+	    <static><forward></forward></static>
+	</filteringDatabase>
+</filteringDatabases>
+
+%file: schedule.xml
+<?xml version="1.0" ?>
+<schedule>
+	<defaultcycle>400us</defaultcycle>
+    <host name="h2">
+		<cycle>5us</cycle>
+		<entry>
+			<start>1us</start>
+			<queue>7</queue>
+			<dest>00:00:00:00:00:03</dest>
+			<size>1400B</size>
+            <flowId>1</flowId>
+		</entry>
+        <entry>
+			<start>3us</start>
+			<queue>7</queue>
+			<dest>00:00:00:00:00:03</dest>
+			<size>1400B</size>
+            <flowId>1</flowId>
+		</entry>
+	</host>
+</schedule>
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 1ms
+record-eventlog = true
+debug-on-errors = true
+
+**.h1.eth.address = "00-00-00-00-00-01"
+**.h2.eth.address = "00-00-00-00-00-02"
+**.h3.eth.address = "00-00-00-00-00-03"
+**.h4.eth.address = "00-00-00-00-00-04"
+
+**.h1.trafGenApp.destAddress = "00-00-00-00-00-02"
+**.h2.trafGenSchedApp.initialSchedule = xmldoc("schedule.xml")
+**.h3.trafGenApp.destAddress = "00-00-00-00-00-04"
+**.h4.trafGenApp.destAddress = "00-00-00-00-00-01"
+
+**.h*.trafGenApp.sendInterval = 1us
+**.h*.trafGenApp.packetLength = 1000B
+**.h*.trafGenApp.startTime = 0
+**.h*.trafGenApp.stopTime = 1s
+**.h1.trafGenApp.numPacketsPerBurst = 0
+
+**.s1.filteringDatabase.database = xmldoc("fdb.xml")
+
+%exitcode: 0

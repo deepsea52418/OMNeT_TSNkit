@@ -1,0 +1,23 @@
+====== inet-4.x ======
+
+2019-11-19  ------ inet-4.1.2 released ------
+
+2019-01-28  ------ inet-4.1.0 released ------
+
+2018-10-19  Levente Mészáros
+
+	Renamed DefaultDissector to DefaultProtocolDissector.
+
+2018-10-19  Levente Mészáros
+
+	Added protocol parameter to ProtocolDissector::dissect().
+	This allows handling multiple protocols in the same dissector.
+
+2018-06-27  ------ inet-4.0.0 released ------
+
+2018-04-13  ------ inet-3.99.3 released ------
+
+2018-02-15  Levente Mészáros
+
+	Added new dissector API in the form of PacketDissector, ProtocolDissector,
+	and ProtocolDissectorRegistry.

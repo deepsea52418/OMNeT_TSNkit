@@ -1,0 +1,73 @@
+[General]
+network = nesting.simulations.examples.teach
+
+record-eventlog = false 
+debug-on-errors = true
+result-dir = results_teach
+sim-time-limit = 1s
+
+# debug
+**.displayAddresses = true
+**.verbose = true
+
+# MAC Addresses
+**.workstation1.eth.address = "00-00-00-00-00-01"
+**.workstation2.eth.address	= "00-00-00-00-00-02"
+**.workstation3.eth.address = "00-00-00-00-00-03"
+**.workstation5.eth.address = "00-00-00-00-00-05"
+**.workstation6.eth.address = "00-00-00-00-00-06"
+**.workstation7.eth.address = "00-00-00-00-00-07"
+
+# Switches
+**.switch*.processingDelay.delay = 5us
+**.filteringDatabase.database = xmldoc("xml/teach_Routing.xml", "/filteringDatabases/")
+
+**.switch*.eth[*].queue.gateController.initialSchedule = xmldoc("xml/TestScenarioSchedule_AllOpen.xml", "/schedules/switch[@name='switch0']/port[@id='3']/schedule")
+**.switch*.eth[*].queue.gateController.initialSchedule = xmldoc("xml/TestScenarioSchedule_AllOpen.xml", "/schedules/switch[@name='switch4']/port[@id='0']/schedule")
+**.switch*.eth[*].queue.gateController.enableHoldAndRelease = false
+**.switch*.eth[*].queue.numberOfQueues = 8
+**.switch*.eth[*].queue.tsAlgorithms[0].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[1].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[2].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[3].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[4].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[5].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[6].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[7].typename = "StrictPriority"
+**.switch*.eth[*].queue.queues[0].expressQueue = true
+**.switch*.eth[*].queue.queues[1].expressQueue = true
+**.switch*.eth[*].queue.queues[2].expressQueue = true
+**.switch*.eth[*].queue.queues[3].expressQueue = true
+**.switch*.eth[*].queue.queues[4].expressQueue = true
+**.switch*.eth[*].queue.queues[5].expressQueue = true
+**.switch*.eth[*].queue.queues[6].expressQueue = true
+**.switch*.eth[*].queue.queues[7].expressQueue = true
+
+**.queues[*].bufferCapacity = 363360b
+
+**.switch*.eth[*].mac.enablePreemptingFrames = false
+
+# Schedule/Routing Swap
+#**.scheduleSwap.schedule = xmldoc("xml/TestScenarioScheduleSwap.xml")
+
+# Workstations
+**.workstation1.trafGenSchedApp.initialSchedule = xmldoc("xml/mytest_gcl.xml")
+
+# Workstations
+**.workstation2.trafGenSchedApp.initialSchedule = xmldoc("xml/mytest_gcl.xml")
+
+# Workstations
+**.workstation3.trafGenSchedApp.initialSchedule = xmldoc("xml/mytest_gcl.xml")
+
+# Backup Server
+**.workstation5.trafGenApp.numPacketsPerBurst = 0
+**.workstation5.trafGenApp.sendInterval = 1ms
+**.workstation5.trafGenApp.packetLength = 100B
+
+**.workstation6.trafGenApp.numPacketsPerBurst = 0
+**.workstation6.trafGenApp.sendInterval = 1ms
+**.workstation6.trafGenApp.packetLength = 100B
+
+**.workstation7.trafGenApp.numPacketsPerBurst = 0
+**.workstation7.trafGenApp.sendInterval = 1ms
+**.workstation7.trafGenApp.packetLength = 100B

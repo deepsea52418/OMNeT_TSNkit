@@ -1,0 +1,7 @@
+#!/bin/bash
+
+NESTING=..
+INET=$NESTING/../inet
+D=$([ "$MODE" == "debug" ] && echo "_dbg" || echo "")
+
+./nesting$D -m -u Qtenv -n .:$NESTING/src:$INET/src --image-path=$INET/images -l $NESTING/src/nesting -l $INET/src/INET "$1"

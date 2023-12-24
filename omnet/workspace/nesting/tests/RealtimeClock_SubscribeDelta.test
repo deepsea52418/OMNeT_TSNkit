@@ -1,0 +1,153 @@
+%description:
+TODO
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IdealOscillator;
+import nesting.common.time.RealtimeClock;
+
+network Test
+{
+    @display("bgb=376.77332,118.33333");
+    submodules:
+        oscillator: IdealOscillator {
+            @display("p=61.53333,50.173332");
+            frequency = 1MHz;
+        }
+        clock: RealtimeClock {
+            @display("p=169.45332,50.173332");
+            oscillatorModule = "^.oscillator";
+        }
+        testRealtimeClock: TestRealtimeClock {
+            @display("p=284.94666,50.173332");
+        }
+}
+
+%file: TestRealtimeClock.ned
+package @TESTNAME@;
+
+simple TestRealtimeClock
+{
+    parameters:
+        string clockModule = "^.clock";
+}
+
+
+%file: TestRealtimeClock.h
+#ifndef __@TESTNAME@_TestRealtimeClock_H_
+#define __@TESTNAME@_TestRealtimeClock_H_
+
+#include <omnetpp.h>
+
+#include "nesting/common/time/IClock2.h"
+#include "nesting/common/time/RealtimeClock.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestRealtimeClock : public cSimpleModule, public IClock2::TimestampListener
+{
+protected:
+    IClock2* clock;
+    unsigned subscribedTimestampCount = 0;
+protected:
+    virtual void initialize() override;
+    virtual void finish() override;
+public:
+    virtual void onTimestamp(IClock2& clock, std::shared_ptr<const IClock2::Timestamp> timestamp) override;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestRealtimeClock.cc
+#include "TestRealtimeClock.h"
+
+#include "inet/common/ModuleAccess.h"
+
+#include <iostream>
+
+namespace @TESTNAME@ {
+
+Define_Module(TestRealtimeClock);
+
+void TestRealtimeClock::initialize()
+{
+    clock = check_and_cast<IClock2*>(getModuleByPath(par("clockModule")));
+    clock->subscribeTimestamp(*this, SimTime(1, SIMTIME_US));  
+    
+}
+
+void TestRealtimeClock::finish()
+{
+	if (subscribedTimestampCount != 4) {
+		throw cRuntimeError("Expected 4 timestamp to be scheduled!");
+	}
+}
+
+void TestRealtimeClock::onTimestamp(IClock2& clock, std::shared_ptr<const IClock2::Timestamp> timestamp)
+{
+    Enter_Method("timestamp");
+
+    if (subscribedTimestampCount == 0) {
+        this->clock->subscribeDelta(*this, SimTime(6100, SIMTIME_NS));  
+        this->clock->subscribeDelta(*this, SimTime(500, SIMTIME_NS));
+        this->clock->subscribeDelta(*this, SimTime(4300, SIMTIME_NS));
+    }
+
+    // Check conditions for first subscribed timestamp
+    if (subscribedTimestampCount == 1) {
+        if (timestamp->getLocalTime() != SimTime(1500, SIMTIME_NS)) {
+            throw cRuntimeError("Expected timestamp #1 to be scheduled for 1500ns of local clock time.");
+        } else if (clock.updateAndGetLocalTime() != SimTime(2, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #1 to be scheduled at 2us of local clock time.");
+        } else if (simTime() != SimTime(2, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #1 to be scheduled at 2us of global simulation time.");
+        }
+    }
+    
+    // Check conditions for #2 subscribed timestamp
+    if (subscribedTimestampCount == 2) {
+        if (timestamp->getLocalTime() != SimTime(5300, SIMTIME_NS)) {
+            throw cRuntimeError("Expected timestamp #2 to be scheduled for 5300ns of local clock time.");
+        } else if (clock.updateAndGetLocalTime() != SimTime(6, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #2 to be scheduled at 6us of local clock time.");
+        } else if (simTime() != SimTime(6, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #2 to be scheduled at 6us of global simulation time.");
+        }
+    }
+    
+    // Check conditions for #3 subscribed timestamp
+    if (subscribedTimestampCount == 3) {
+        if (timestamp->getLocalTime() != SimTime(7100, SIMTIME_NS)) {
+            throw cRuntimeError("Expected timestamp #3 to be scheduled for 7100ns of local clock time.");
+        } else if (clock.updateAndGetLocalTime() != SimTime(8, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #3 to be scheduled at 8us of local clock time.");
+        } else if (simTime() != SimTime(8, SIMTIME_US)) {
+            throw cRuntimeError("Expected timestamp #3 to be scheduled at 8us of global simulation time.");
+        }
+    }
+
+    subscribedTimestampCount++;
+
+    EV_INFO << "Subscribed time: " << timestamp->getLocalTime()
+            << ", Clock time: " << clock.updateAndGetLocalTime()
+            << ", Simulation time: " << simTime() << std::endl;
+}
+
+} // namespace @TESTNAME@
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 1s
+
+%exitcode: 0

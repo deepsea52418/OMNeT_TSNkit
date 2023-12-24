@@ -1,0 +1,13 @@
+05:05:13 **** Incremental Build of configuration gcc-release for project nesting ****
+make MODE=release -j4 all 
+cd src && make
+make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/src'
+cd simulations && make
+make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/simulations'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/simulations'
+
+05:05:13 Build Finished. 0 errors, 0 warnings. (took 183ms)
+

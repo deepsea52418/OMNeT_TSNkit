@@ -1,0 +1,63 @@
+image: docker:19.03.8
+services:
+    - docker:19.03.8-dind
+
+stages:
+    - build
+    - test
+    - release
+    - deploy
+
+variables:
+    DOCKER_DRIVER: overlay
+    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+
+before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+    stage: build
+    script:
+        - docker build --pull -t $CONTAINER_TEST_IMAGE .
+        - docker push $CONTAINER_TEST_IMAGE
+
+test_release:
+    stage: test
+    script:
+        - docker pull $CONTAINER_TEST_IMAGE
+        - docker run $CONTAINER_TEST_IMAGE /root/models/nesting/scripts/run_tests.sh
+
+test_dbg:
+    stage: test
+    script:
+        - docker pull $CONTAINER_TEST_IMAGE
+        - docker run --env MODE=debug $CONTAINER_TEST_IMAGE /root/models/nesting/scripts/run_tests.sh
+
+release_image:
+    stage: release
+    script:
+        - docker pull $CONTAINER_TEST_IMAGE
+        - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+        - docker push $CONTAINER_RELEASE_IMAGE
+    only:
+        - master
+
+# How to keep several pages published for different branches: https://stackoverflow.com/a/58915486
+pages:
+    stage: deploy
+    script:
+        - CID=$(docker create $CONTAINER_TEST_IMAGE)
+        - mkdir -p public/$CI_COMMIT_REF_SLUG
+        - docker cp $CID:/root/models/nesting/doc/build/html/. public/$CI_COMMIT_REF_SLUG
+        - docker rm $CID
+    artifacts:
+        name: "$CI_COMMIT_REF_SLUG"
+        paths:
+            - public
+    only:
+        - master
+        - /^v\d+\.\d+\.x$/ # version branches, '1.0.x', '1.1.x', usw.

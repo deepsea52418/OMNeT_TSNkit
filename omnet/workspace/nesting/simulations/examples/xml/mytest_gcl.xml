@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<schedules>
+	<defaultcycle>2000000ns</defaultcycle>
+	<host name="robotController">
+		<cycle>2000000ns</cycle>
+		<entry>
+			<start>10ns</start>
+			<queue>7</queue>
+			<dest>00:00:00:00:00:04</dest>
+			<size>354B</size>
+			<flowId>4</flowId>
+		</entry>
+	</host>
+	<switch name="switchA">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+		<switch name="switchA">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+		<switch name="switchA">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchB">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchB">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchB">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchC">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchC">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchC">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchD">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchD">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchD">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchE">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchE">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchE">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchF">
+		<port id="0">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchF">
+		<port id="1">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switchF">
+		<port id="2">
+			<schedule cycleTime="400us">
+				<entry>
+					<length>400us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+</schedules>

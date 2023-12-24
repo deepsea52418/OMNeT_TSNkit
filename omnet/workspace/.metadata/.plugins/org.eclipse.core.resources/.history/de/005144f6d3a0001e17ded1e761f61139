@@ -1,0 +1,90 @@
+[General]
+network = nesting.simulations.examples.d_net
+
+record-eventlog = false 
+debug-on-errors = true
+result-dir = results_dnet
+sim-time-limit = 1s
+
+# debug
+**.displayAddresses = true
+**.verbose = true
+
+# MAC Addresses
+**.sensor0.eth.address = "00-00-00-00-00-00"
+**.computer1.eth.address	= "00-00-00-00-00-01"
+**.executor2.eth.address = "00-00-00-00-00-02"
+**.executor3.eth.address = "00-00-00-00-00-03"
+**.sensor4.eth.address = "00-00-00-00-00-04"
+**.executor9.eth.address = "00-00-00-00-00-09"
+**.sensor10.eth.address = "00-00-00-00-00-10"
+**.executor11.eth.address = "00-00-00-00-00-11"
+**.executor12.eth.address = "00-00-00-00-00-12"
+**.executor13.eth.address = "00-00-00-00-00-13"
+
+# Switches
+**.switch*.processingDelay.delay = 2us
+**.filteringDatabase.database = xmldoc("xml/dnet_Routing.xml", "/filteringDatabases/")
+
+**.switch*.eth[*].queue.gateController.initialSchedule = xmldoc("xml/dnet_gcl.xml", "/schedules/switch[@name='switch5']/port[@id='3']/schedule")
+**.switch*.eth[*].queue.gateController.initialSchedule = xmldoc("xml/dnet_gcl.xml", "/schedules/switch[@name='switch6']/port[@id='0']/schedule")
+#**.switch*.eth[*].queue.gateController.initialSchedule = xmldoc("xml/TestScenarioSchedule_AllOpen.xml", "/schedules/switch[@name='switch4']/port[@id='0']/schedule")
+**.switch*.eth[*].queue.gateController.enableHoldAndRelease = false
+**.switch*.eth[*].queue.numberOfQueues = 8
+**.switch*.eth[*].queue.tsAlgorithms[0].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[1].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[2].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[3].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[4].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[5].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[6].typename = "StrictPriority"
+**.switch*.eth[*].queue.tsAlgorithms[7].typename = "StrictPriority"
+**.switch*.eth[*].queue.queues[0].expressQueue = true
+**.switch*.eth[*].queue.queues[1].expressQueue = true
+**.switch*.eth[*].queue.queues[2].expressQueue = true
+**.switch*.eth[*].queue.queues[3].expressQueue = true
+**.switch*.eth[*].queue.queues[4].expressQueue = true
+**.switch*.eth[*].queue.queues[5].expressQueue = true
+**.switch*.eth[*].queue.queues[6].expressQueue = true
+**.switch*.eth[*].queue.queues[7].expressQueue = true
+
+**.queues[*].bufferCapacity = 363360b
+
+**.switch*.eth[*].mac.enablePreemptingFrames = false
+
+# Schedule/Routing Swap
+#**.scheduleSwap.schedule = xmldoc("xml/TestScenarioScheduleSwap.xml")
+
+# computer1
+**.computer1.trafGenSchedApp.initialSchedule = xmldoc("xml/dnet_gcl.xml")
+
+# sensors
+**.sensor0.trafGenSchedApp.initialSchedule = xmldoc("xml/dnet_gcl.xml")
+**.sensor4.trafGenSchedApp.initialSchedule = xmldoc("xml/dnet_gcl.xml")
+**.sensor10.trafGenSchedApp.initialSchedule = xmldoc("xml/dnet_gcl.xml")
+
+# Backup Server
+**.executor2.trafGenApp.numPacketsPerBurst = 0
+**.executor2.trafGenApp.sendInterval = 1ms
+**.executor2.trafGenApp.packetLength = 100B
+
+**.executor3.trafGenApp.numPacketsPerBurst = 0
+**.executor3.trafGenApp.sendInterval = 1ms
+**.executor3.trafGenApp.packetLength = 100B
+
+**.executor9.trafGenApp.numPacketsPerBurst = 0
+**.executor9.trafGenApp.sendInterval = 1ms
+**.executor9.trafGenApp.packetLength = 100B
+
+**.executor11.trafGenApp.numPacketsPerBurst = 0
+**.executor11.trafGenApp.sendInterval = 1ms
+**.executor11.trafGenApp.packetLength = 100B
+
+**.executor12.trafGenApp.numPacketsPerBurst = 0
+**.executor12.trafGenApp.sendInterval = 1ms
+**.executor12.trafGenApp.packetLength = 100B
+
+**.executor13.trafGenApp.numPacketsPerBurst = 0
+**.executor13.trafGenApp.sendInterval = 1ms
+**.executor13.trafGenApp.packetLength = 100B
+

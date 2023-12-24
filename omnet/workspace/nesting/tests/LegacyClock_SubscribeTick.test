@@ -1,0 +1,157 @@
+%description:
+Tests the LegacyClock submodule
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IClock;
+import nesting.common.time.IOscillator;
+
+network Test
+{
+    @display("bgb=280,213");
+    submodules:
+        oscillator: <"IdealOscillator"> like IOscillator;
+        clock: <"LegacyClock"> like IClock {
+            @display("p=87,103");
+            oscillatorModule = "^.oscillator";
+        }
+        testClock: TestClock {
+            @display("p=182.70667,102.24");
+        }
+}
+
+%file: TestClock.ned
+package @TESTNAME@;
+
+simple TestClock
+{
+    parameters:
+        string clockModule = default("^.clock");
+}
+
+%file: TestClock.h
+#ifndef __TESTCLOCK_H_
+#define __TESTCLOCK_H_
+
+#include <omnetpp.h>
+
+#include <iostream>
+
+#include "nesting/common/time/IClock.h"
+#include "nesting/common/time/IClockListener.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestClock : public cSimpleModule, public IClockListener
+{
+protected:
+    IClock* clock;
+    unsigned tickCount = 0;
+protected:
+    virtual void initialize() override;
+    virtual void finish() override;
+public:
+    virtual void tick(IClock *clock, short kind) override;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestClock.cc
+#include "TestClock.h"
+
+#include "inet/common/ModuleAccess.h"
+
+namespace @TESTNAME@ {
+
+Define_Module(TestClock);
+
+void TestClock::initialize()
+{
+    clock = check_and_cast<IClock*>(getModuleByPath(par("clockModule")));
+
+    clock->subscribeTick(this, 1, 0);
+    clock->subscribeTick(this, 3, 0);
+    clock->subscribeTick(this, 2, 0);
+
+    clock->subscribeTick(this, 4, 2);
+    clock->subscribeTick(this, 4, 1);
+    clock->subscribeTick(this, 4, 0);
+}
+
+void TestClock::finish()
+{
+    EV_INFO << "tickCount=" << tickCount << std::endl;
+    if (tickCount != 6) {
+    	throw cRuntimeError("Expected 6 ticks to be scheduled!");
+    }
+}
+
+void TestClock::tick(IClock *clock, short kind)
+{
+    Enter_Method("tick");
+
+    EV_INFO << "tickCount=" << tickCount << ", kind=" << kind << std::endl;
+
+    switch (tickCount) {
+    case 0:
+        if (kind != 0) {
+        	throw cRuntimeError("Expected tick #1 to be of kind 0");
+        }
+        break;
+    case 1:
+        if (kind != 0) {
+        	throw cRuntimeError("Expected tick #2 to be of kind 0");
+        }
+        break;
+    case 2:
+        if (kind != 0) {
+        	throw cRuntimeError("Expected tick #3 to be of kind 0");
+        }
+        /*
+        TODO update test case
+        clock->unsubscribeTicks(this);
+        clock->subscribeTick(this, 4, 5);
+        clock->subscribeTick(this, 4, 4);
+        clock->subscribeTick(this, 4, 3);
+        */
+        break;
+    case 3:
+        if (kind != 0) {
+        	throw cRuntimeError("Expected tick #4 to be of kind 0");
+        }
+        break;
+    case 4:
+        if (kind != 1) {
+        	throw cRuntimeError("Expected tick #5 to be of kind 1");
+        }
+        break;
+    case 5:
+	    if (kind != 2) {
+        	throw cRuntimeError("Expected tick #6 to be of kind 2!");
+        }
+        break;
+    }
+
+    tickCount++;
+}
+
+} // namespace @TESTNAME@
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 1ms
+record-eventlog = true
+debug-on-errors = true
+
+%exitcode: 0

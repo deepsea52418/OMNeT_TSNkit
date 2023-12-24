@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<schedules>
+	<defaultcycle>2000us</defaultcycle>
+	<host name="sensor0">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="sensor4">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="sensor10">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:01</dest>
+			<size>50B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="computer1">
+		<cycle>2000us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>5</queue>
+			<dest>00:00:00:00:00:09</dest>
+			<size>50B</size>
+			<flowId>8</flowId>
+		</entry>
+		<entry>
+			<start>800ns</start>
+			<queue>4</queue>
+			<dest>00:00:00:00:00:13</dest>
+			<size>50B</size>
+			<flowId>7</flowId>
+		</entry>
+		<entry>
+			<start>1600ns</start>
+			<queue>3</queue>
+			<dest>00:00:00:00:00:03</dest>
+			<size>50B</size>
+			<flowId>6</flowId>
+		</entry>
+		<entry>
+			<start>2400ns</start>
+			<queue>2</queue>
+			<dest>00:00:00:00:00:12</dest>
+			<size>50B</size>
+			<flowId>5</flowId>
+		</entry>
+		<entry>
+			<start>3200ns</start>
+			<queue>1</queue>
+			<dest>00:00:00:00:00:02</dest>
+			<size>50B</size>
+			<flowId>4</flowId>
+		</entry>
+		<entry>
+			<start>4000ns</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:11</dest>
+			<size>50B</size>
+			<flowId>3</flowId>
+		</entry>
+	</host>
+	<switch name="switch5">
+		<port id="3">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2800ns</length>
+					<bitvector>00000000</bitvector>
+				</entry>
+				<entry>
+					<length>800ns</length>
+					<bitvector>00000100</bitvector>
+				</entry>
+				<entry>
+					<length>800ns</length>
+					<bitvector>00000010</bitvector>
+				</entry>
+				<entry>
+					<length>800ns</length>
+					<bitvector>00000001</bitvector>
+				</entry>
+				<entry>
+					<length>14800ns</length>
+					<bitvector>00000000</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switch6">
+		<port id="0">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2000us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+</schedules>

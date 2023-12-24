@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;nesting/simulations/examples/xml/mytest_Routing2.xml&apos; to &apos;mytest_Routing.xml&apos;" description="Rename resource &apos;mytest_Routing2.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="simulations/examples/xml/mytest_Routing2.xml" name="mytest_Routing.xml" stamp="1701171047434" updateReferences="true"/>
+</session>

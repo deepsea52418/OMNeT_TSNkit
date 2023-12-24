@@ -1,0 +1,109 @@
+%description:
+Checks if multiple subscribers can subscribe to the same tick without issues.
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IClock;
+import nesting.common.time.IOscillator;
+
+network Test
+{
+    @display("bgb=280,213");
+    submodules:
+        oscillator: <"IdealOscillator"> like IOscillator;
+        clock: <"LegacyClock"> like IClock {
+            @display("p=87,103");
+            oscillatorModule = "^.oscillator";
+        }
+        testClock[3]: TestClock {
+            @display("p=182.70667,102.24");
+        }
+}
+
+%file: TestClock.ned
+package @TESTNAME@;
+
+simple TestClock
+{
+    parameters:
+        string clockModule = default("^.clock");
+}
+
+%file: TestClock.h
+#ifndef __TESTCLOCK_H_
+#define __TESTCLOCK_H_
+
+#include <omnetpp.h>
+
+#include <iostream>
+
+#include "nesting/common/time/IClock.h"
+#include "nesting/common/time/IClockListener.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestClock : public cSimpleModule, public IClockListener
+{
+protected:
+    IClock* clock;
+    unsigned tickCount = 0;
+protected:
+    virtual void initialize() override;
+    virtual void finish() override;
+public:
+    virtual void tick(IClock *clock, short kind) override;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestClock.cc
+#include "TestClock.h"
+
+#include "inet/common/ModuleAccess.h"
+
+namespace @TESTNAME@ {
+
+Define_Module(TestClock);
+
+void TestClock::initialize()
+{
+    clock = check_and_cast<IClock*>(getModuleByPath(par("clockModule")));
+
+    clock->subscribeTick(this, 1, 0);
+}
+
+void TestClock::finish()
+{
+    EV_INFO << "tickCount=" << tickCount << std::endl;
+    if (tickCount != 1) {
+    	throw cRuntimeError("Expected 1 ticks to be scheduled!");
+    }
+}
+
+void TestClock::tick(IClock *clock, short kind)
+{
+    Enter_Method("tick");
+    EV_INFO << "tickCount=" << tickCount << ", kind=" << kind << std::endl;
+    tickCount++;
+}
+
+} // namespace @TESTNAME@
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 1ms
+record-eventlog = true
+debug-on-errors = true
+
+%exitcode: 0

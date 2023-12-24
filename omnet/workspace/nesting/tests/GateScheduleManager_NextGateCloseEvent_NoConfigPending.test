@@ -1,0 +1,202 @@
+%description:
+Tests the nextGateCloseEvent method of the GateScheduleManager module in a
+situation where no schedule swap is in progress (configPending is false).
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IdealOscillator;
+import nesting.common.time.RealtimeClock;
+import nesting.common.schedule.GateScheduleManager;
+
+network Test
+{
+    @display("bgb=153.72,222.04001");
+    submodules:
+        oscillator: IdealOscillator {
+            @display("p=76.25,28.67");
+            frequency = 1MHz;
+        }
+        clock: RealtimeClock {
+            @display("p=76.25,76.25");
+            oscillatorModule = "^.oscillator";
+        }
+        gateScheduleManager: GateScheduleManager {
+            @display("p=76.25,125.66");
+            clockModule = "^.clock";
+            initialAdminSchedule = xmldoc("schedule.xml");
+            gateEnabled = true;
+        }
+        testGateScheduleManager: TestGateScheduleManager {
+            @display("p=76.25,175.68001");
+            clockModule = "^.clock";
+            gateScheduleManagerModule = "^.gateScheduleManager";
+        }
+}
+
+%file: TestGateScheduleManager.ned
+package @TESTNAME@;
+
+simple TestGateScheduleManager
+{
+    parameters:
+        string gateScheduleManagerModule;
+        string clockModule;
+}
+
+%file: TestGateScheduleManager.h
+#ifndef __@TESTNAME@_TESTGATESCHEDULEMANAGER_H_
+#define __@TESTNAME@_TESTGATESCHEDULEMANAGER_H_
+
+#include <omnetpp.h>
+
+#include "nesting/common/time/IClock2.h"
+#include "nesting/common/schedule/GateScheduleManager.h"
+#include "nesting/ieee8021q/Ieee8021q.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestGateScheduleManager : public cSimpleModule, public GateScheduleManager::IOperStateListener
+{
+protected:
+    GateScheduleManager* gateScheduleManager;
+    IClock2* clock;
+protected:
+    virtual ~TestGateScheduleManager();
+    virtual void initialize() override;
+    virtual void onOperStateChange(const GateBitvector& newBitvector) override;
+    virtual void handleMessage(cMessage* msg) override;
+    virtual void logGateClosingTimes() const;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestGateScheduleManager.cc
+#include "TestGateScheduleManager.h"
+
+#include "inet/common/ModuleAccess.h"
+
+#include <iostream>
+
+namespace @TESTNAME@ {
+
+Define_Module(TestGateScheduleManager);
+
+TestGateScheduleManager::~TestGateScheduleManager()
+{
+    // TODO cancelAndDelete self-messages in eventqueue
+}
+
+void TestGateScheduleManager::initialize()
+{
+    gateScheduleManager = check_and_cast<GateScheduleManager*>(getModuleByPath(par("gateScheduleManagerModule")));
+    gateScheduleManager->subscribeOperStateChanges(*this);
+    clock = check_and_cast<IClock2*>(getModuleByPath(par("clockModule")));
+    
+    scheduleAt(SimTime(5, SIMTIME_US), new cMessage());
+    scheduleAt(SimTime(15, SIMTIME_US), new cMessage());
+    scheduleAt(SimTime(35, SIMTIME_US), new cMessage());
+    scheduleAt(SimTime(65, SIMTIME_US), new cMessage());
+}
+
+void TestGateScheduleManager::onOperStateChange(const GateBitvector& newBitvector)
+{
+    Enter_Method("GateBitvector");
+    simtime_t localTime = clock->updateAndGetLocalTime();
+    EV_INFO << "Set new bitvector " << newBitvector << " at t="
+            << localTime.inUnit(SIMTIME_US) << "us." << std::endl;
+    logGateClosingTimes();
+}
+
+void TestGateScheduleManager::handleMessage(cMessage* msg)
+{
+    logGateClosingTimes();
+    delete msg;
+}
+
+void TestGateScheduleManager::logGateClosingTimes() const
+{
+    simtime_t localTime = clock->updateAndGetLocalTime();
+    for (uint64_t gateIndex = 0; gateIndex < 8; gateIndex++) {
+        simtime_t nextGateCloseEvent = gateScheduleManager->nextGateCloseEvent(gateIndex);
+        if (nextGateCloseEvent == SimTime::getMaxTime()) {
+            EV_INFO << "Gate #" << gateIndex << " is opened indefinitely"
+                    << " at t=" << localTime.inUnit(SIMTIME_US)
+                    << "us (local time)." << std::endl;
+        } else {
+            EV_INFO << "Gate #" << gateIndex << " will close in "
+                    << nextGateCloseEvent.inUnit(SIMTIME_US) << "us at t="
+                    << localTime.inUnit(SIMTIME_US) << "us (local time)."
+                    << std::endl;
+        }
+    }
+}
+
+} // namespace @TESTNAME@
+
+%file: schedule.xml
+<schedule baseTime="0s" cycleTime="60us">
+    <event gateStates="00000011" timeInterval="10us"/>
+    <event gateStates="00000101" timeInterval="20us"/>
+    <event gateStates="00000111" timeInterval="30us"/>
+</schedule>
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 100us
+record-eventlog = true
+result-dir = result_dir
+
+%exitcode: 0
+
+%postrun-command: sed -e '/^[^-].*/d' -e 's/- \(.*\)/\1/g' -e '/^\s*$/d' result_dir/General-#0.elog > log.txt
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=0us (local time).
+Gate #1 will close in 10us at t=0us (local time).
+Gate #2 will close in 0us at t=0us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=5us (local time).
+Gate #1 will close in 5us at t=5us (local time).
+Gate #2 will close in 0us at t=5us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=10us (local time).
+Gate #1 will close in 0us at t=10us (local time).
+Gate #2 will close in 50us at t=10us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=15us (local time).
+Gate #1 will close in 0us at t=15us (local time).
+Gate #2 will close in 45us at t=15us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=30us (local time).
+Gate #1 will close in 40us at t=30us (local time).
+Gate #2 will close in 30us at t=30us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=35us (local time).
+Gate #1 will close in 35us at t=35us (local time).
+Gate #2 will close in 25us at t=35us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=60us (local time).
+Gate #1 will close in 10us at t=60us (local time).
+Gate #2 will close in 0us at t=60us (local time).
+
+%contains: log.txt
+Gate #0 is opened indefinitely at t=65us (local time).
+Gate #1 will close in 5us at t=65us (local time).
+Gate #2 will close in 0us at t=65us (local time).

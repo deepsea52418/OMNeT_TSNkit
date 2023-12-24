@@ -1,0 +1,105 @@
+%description:
+Schedules tick events, that are added to the back of the event queue within the IdealOscillator module.
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IdealOscillator;
+
+network Test
+{
+    @display("bgb=280,213");
+    submodules:
+        oscillator: IdealOscillator {
+            @display("p=87,103");
+        }
+        testIdealOscillator: TestIdealOscillator {
+            @display("p=182.70667,102.24");
+        }
+}
+
+%file: TestIdealOscillator.ned
+package @TESTNAME@;
+
+simple TestIdealOscillator
+{
+    parameters:
+        string oscillatorModule = default("^.oscillator");
+}
+
+
+%file: TestIdealOscillator.h
+#ifndef __@TESTNAME@_TestIdealOscillator_H_
+#define __@TESTNAME@_TestIdealOscillator_H_
+
+#include <omnetpp.h>
+
+#include "nesting/common/time/IOscillator.h"
+#include "nesting/common/time/IdealOscillator.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestIdealOscillator : public cSimpleModule, public IOscillator::TickListener
+{
+protected:
+    IdealOscillator* oscillator;
+    unsigned tickCount = 0;
+protected:
+    virtual void initialize() override;
+    virtual void finish() override;
+public:
+    virtual void onTick(IOscillator& oscillator, std::shared_ptr<const IOscillator::Tick> tick) override;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestIdealOscillator.cc
+#include "TestIdealOscillator.h"
+
+#include "inet/common/ModuleAccess.h"
+
+#include <iostream>
+
+namespace @TESTNAME@ {
+
+Define_Module(TestIdealOscillator);
+
+void TestIdealOscillator::initialize()
+{
+    oscillator = check_and_cast<IdealOscillator*>(getModuleByPath(par("oscillatorModule")));
+    
+    for (int idleTicks = 0; idleTicks < 10; idleTicks++) {
+    	oscillator->subscribeTick(*this, idleTicks, idleTicks);
+    }
+}
+
+void TestIdealOscillator::finish()
+{
+	if (tickCount != 10) {
+		throw cRuntimeError("Expected 10 ticks to be scheduled!");
+	}
+}
+
+void TestIdealOscillator::onTick(IOscillator& oscillator, std::shared_ptr<const IOscillator::Tick> tick)
+{
+    Enter_Method("tick");
+    tickCount++;
+}
+
+} // namespace @TESTNAME@
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 1ms
+
+%exitcode: 0

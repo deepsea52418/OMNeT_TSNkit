@@ -1,0 +1,14 @@
+05:05:10 **** Incremental Build of configuration release for project inet ****
+make MODE=release -j4 all 
+cd src && make
+make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/inet/src'
+*** COMPILING with:
+clang++ -c -std=c++11 -O3 -DNDEBUG=1 -MMD -MP -MF .d  -fPIC  -Wno-deprecated-register -Wno-unused-function -fno-omit-frame-pointer -DHAVE_SWAPCONTEXT -DXMLPARSER=libxml -DPREFER_QTENV -DWITH_QTENV -DWITH_PARSIM -DWITH_NETBUILDER -DWITH_OSG -DWITH_OSGEARTH -Wno-overloaded-virtual -include inet/common/precompiled_release.h  -DINET_EXPORT -I. -I/home/tsn/omnetpp-5.6.1/include
+*** LINKING with:
+clang++ -shared -fPIC -o ../out/clang-release/src/libINET.so -Wl,--no-as-needed -Wl,--whole-archive  -Wl,--no-whole-archive -loppenvir -loppsim -ldl -lstdc++  -losg -losgText -losgDB -losgGA -losgViewer -losgUtil -lOpenThreads  -losgEarth -losgEarthUtil  -Wl,-rpath,/home/tsn/omnetpp-5.6.1/lib -Wl,-rpath,/lib -Wl,-rpath,.  -L/home/tsn/omnetpp-5.6.1/lib
+Building...
+make[1]: Nothing to be done for 'all-pch'.
+make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/inet/src'
+
+05:05:12 Build Finished. 0 errors, 0 warnings. (took 1s.950ms)
+

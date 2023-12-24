@@ -1,0 +1,46 @@
+<filteringDatabases>
+	<filteringDatabase id="switch5">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to computer1 to switch6 -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="3" />
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switch6">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to computer1 to computer1 -->
+	        	<individualAddress macAddress="00-00-00-00-00-01" port="0" />
+	        	<!-- Forward packets addressed to executor2 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="3" />
+	        	<!-- Forward packets addressed to executor3 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="3" />	        	
+	        	<!-- Forward packets addressed to executor9 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-09" port="3" />
+	        	<!-- Forward packets addressed to executor11 to executor11 -->
+	        	<individualAddress macAddress="00-00-00-00-00-11" port="2" />
+	        	<!-- Forward packets addressed to executor12 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-12" port="3" />
+	        	<!-- Forward packets addressed to executor13 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-13" port="3" />		
+	        </forward>
+	    </static>
+	</filteringDatabase>
+	<filteringDatabase id="switch7">
+	    <static>
+	        <forward>
+	        	<!-- Forward packets addressed to executor2 to executor2 -->
+	        	<individualAddress macAddress="00-00-00-00-00-02" port="0" />
+	        	<!-- Forward packets addressed to executor3 to switch8 -->
+	        	<individualAddress macAddress="00-00-00-00-00-03" port="3" />	        	
+	        	<!-- Forward packets addressed to executor9 to switch8 -->
+	        	<individualAddress macAddress="00-00-00-00-00-09" port="3" />
+	        	<!-- Forward packets addressed to executor12 to executor12 -->
+	        	<individualAddress macAddress="00-00-00-00-00-12" port="2" />
+	        	<!-- Forward packets addressed to executor13 to switch7 -->
+	        	<individualAddress macAddress="00-00-00-00-00-13" port="3" />		
+	        </forward>
+	    </static>
+	</filteringDatabase>
+</filteringDatabases>

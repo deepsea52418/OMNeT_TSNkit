@@ -1,0 +1,152 @@
+%description:
+By updating the oscillator frequency, the time at which future tick events must
+be scheduled has to be updated. First we schedule two events #1 and #2 at 1s
+and 2s by setting the oscillator frequency to 1Hz. Then we update the frequency
+to 2Hz when event #1 takes place. Event #2 must be now scheduled at 1.5s.
+
+%file: package.ned
+package @TESTNAME@;
+@namespace(@TESTNAME@);
+
+%file: test.ned
+package @TESTNAME@;
+
+import nesting.common.time.IdealOscillator;
+
+network Test
+{
+    @display("bgb=280,213");
+    submodules:
+        oscillator: IdealOscillator {
+            @display("p=87,103");
+        }
+        testIdealOscillator: TestIdealOscillator {
+            @display("p=182.70667,102.24");
+        }
+}
+
+%file: TestIdealOscillator.ned
+package @TESTNAME@;
+
+simple TestIdealOscillator
+{
+    parameters:
+        string oscillatorModule = default("^.oscillator");
+}
+
+
+%file: TestIdealOscillator.h
+#ifndef __@TESTNAME@_TestIdealOscillator_H_
+#define __@TESTNAME@_TestIdealOscillator_H_
+
+#include <omnetpp.h>
+
+#include "nesting/common/time/IOscillator.h"
+#include "nesting/common/time/IdealOscillator.h"
+
+using namespace omnetpp;
+using namespace nesting;
+
+namespace @TESTNAME@ {
+
+class TestIdealOscillator : public cSimpleModule, public IOscillator::TickListener, public IOscillator::ConfigListener
+{
+protected:
+    IdealOscillator* oscillator;
+    unsigned tickCount = 0;
+    unsigned oscillatorFrequencyChangeCount = 0;
+    double epsilon = 1.0e-12;
+    simtime_t simtime_epsilon = SimTime(1.0e-12);
+protected:
+    virtual void initialize() override;
+    virtual void finish() override;
+public:
+    virtual void onTick(IOscillator& oscillator, std::shared_ptr<const IOscillator::Tick> tick) override;
+    virtual void onFrequencyChange(IOscillator& oscillator, double oldFrequency, double newFrequency) override;
+};
+
+} // namespace @TESTNAME@
+
+#endif
+
+%file: TestIdealOscillator.cc
+#include "TestIdealOscillator.h"
+
+#include "inet/common/ModuleAccess.h"
+
+#include <iostream>
+#include <cmath>
+
+namespace @TESTNAME@ {
+
+Define_Module(TestIdealOscillator);
+
+void TestIdealOscillator::initialize()
+{
+    oscillator = check_and_cast<IdealOscillator*>(getModuleByPath(par("oscillatorModule")));
+    // Set intial oscillator frequency to 1Hz
+    oscillator->setFrequency(1.0);
+    // Subscribe next ticks
+	oscillator->subscribeTick(*this, 1);
+	oscillator->subscribeTick(*this, 2);
+	oscillator->subscribeTick(*this, 3);
+	// Subscribe config changes (to oscillator frequency)
+	oscillator->subscribeConfigChanges(*this);
+}
+
+void TestIdealOscillator::finish()
+{
+	if (tickCount != 3) {
+		throw cRuntimeError("Expected 2 ticks to be scheduled!");
+	}
+	if (oscillatorFrequencyChangeCount != 1) {
+		throw cRuntimeError("Expected oscillator frequency to change 1 time.");
+	}
+}
+
+void TestIdealOscillator::onTick(IOscillator& oscillator, std::shared_ptr<const IOscillator::Tick> tick)
+{
+    Enter_Method("tick");
+    tickCount++;
+    
+    // Invariant: (tickCount == 1) => (simTime() == 1s)
+    if (tickCount == 1 && (simTime() - simtime_epsilon > simtime_t(1.0) || simTime() + simtime_epsilon < simtime_t(1.0))) {
+    	throw cRuntimeError("Expected tick #1 to be scheduled at t=1.");
+    }
+    
+    // Invariant: (tickCount == 2) => (simTime() == 1.5s)
+    if (tickCount == 2 && (simTime() - simtime_epsilon > simtime_t(1.5) || simTime() + simtime_epsilon < simtime_t(1.5))) {
+    	throw cRuntimeError("Expected tick #2 to be scheduled at t=1.5.");
+    }
+    
+    // Invariant: (tickCount == 3) => (simTime() == 2s)
+    if (tickCount == 3 && (simTime() - simtime_epsilon > simtime_t(2.0) || simTime() + simtime_epsilon < simtime_t(2.0))) {
+    	throw cRuntimeError("Expected tick #3 to be scheduled at t=2.");
+    }
+    
+    // Change frequency to 2Hz. Now ticks should be scheduled after 0.5s.
+    if (tickCount == 1) {
+    	oscillator.setFrequency(2.0);
+    }
+}
+
+void TestIdealOscillator::onFrequencyChange(IOscillator& oscillator, double oldFrequency, double newFrequency)
+{
+	Enter_Method("oscillatorFrequencyChange");
+	oscillatorFrequencyChangeCount++;
+	
+	EV_INFO << "Oscillator frequency changed: " << oldFrequency << " -> " << newFrequency << std::endl;
+	
+	if (std::abs(oldFrequency - 1.0) > epsilon || std::abs(newFrequency - 2.0) > epsilon) {
+		throw cRuntimeError("Expected oscillator frequency to change from 1MHz to 2MHz.");
+	}
+}
+
+} // namespace @TESTNAME@
+
+%inifile: omnetpp.ini
+[General]
+network = Test
+sim-time-limit = 3s
+
+%exitcode: 0
