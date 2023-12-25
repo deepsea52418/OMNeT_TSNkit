@@ -46,8 +46,8 @@ graph LR
 |    x    |  x   |  x   |   x   |    x    |    x      |  x      |
 |     x   |     |     |      |        |          |        |
 
-3.  网络配置信息位于xxx/xxx文件夹下
-4.  TSNkit生成的调度信息位于xxx/xxx文件夹下
+3.  网络配置信息位于TSNkit/data/input文件夹下,其中XX_task.csv中存有流信息，XX_net.csv中有网络的拓扑信息
+4.  TSNkit生成的调度信息默认位于TSNkit/src文件夹下,也就是调用tsnkit.models.smt_nw的当前目录
 5.  OMNeT++仿真文件位于xxx/xxx文件夹下
 
 
@@ -58,6 +58,15 @@ graph LR
 3. git clone https://gitee.com/deepsea52418/omnet_tsnkit.git 
 4. cd TSNkit
 5. python setup.py install
+
+## 使用调度算法进行求解（以 _smt_nw_ 为例）
+1. 所有的求解模型都位于 TSNkit/src/tsnkit/models目录下
+2. cd TSNkit/src
+3. 调用smt-nw的格式为 smt_nw.py [-h] [name] task net [output] [workers]， task，net分别为对应的流信息和拓扑信息文件的路径,必须配置，  
+output为TSNkit生成的调度信息存放的路径，默认为`./`,也即当前目录
+4. 使用`python -m  tsnkit.models.smt_nw  task.csv  net.csv  `进行求解，，一般位于data/input下
+5. 求解完成后可以在src目录下（或配置的output目录下）看到生成的GCL.csv,OFFSET.csv,ROUTE.csv等调度信息文件
+
 
 
 ## 参与贡献
