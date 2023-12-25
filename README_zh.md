@@ -68,8 +68,8 @@ output为TSNkit生成的调度信息存放的路径，默认为`./`,也即当前
 5. 求解完成后可以在src目录下（或配置的output目录下）看到生成的GCL.csv,OFFSET.csv,ROUTE.csv等调度信息文件
 
 ## 使用调度信息文件进行仿真（以此项目中smt_nw算法选择的拓扑和流信息为例）
-1.主要包含四个文件。拓扑文件为teach.ned；初始化文件为_example_teach.ini；路由表信息文件为teach_Routing.xml;门控信息文件为teach_gcl.xml。
-2.右键ini文件运行“run as”即可
+1. 主要包含四个文件。拓扑文件为teach.ned；初始化文件为_example_teach.ini；路由表信息文件为teach_Routing.xml;门控信息文件为teach_gcl.xml。
+2. 右键ini文件运行“run as”即可
 
 
 ## 参与贡献
