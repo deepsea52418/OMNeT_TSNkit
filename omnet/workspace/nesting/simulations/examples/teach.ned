@@ -34,32 +34,46 @@ network teach
         switch0: VlanEtherSwitchPreemptable {
             parameters:
                 @display("p=211,142");
+                oscillator.frequency=1GHz;
             gates:
                 ethg[4];
         }
         switch4: VlanEtherSwitchPreemptable {
             parameters:
                 @display("p=303,142");
+                oscillator.frequency=1GHz;
             gates:
                 ethg[4];
         }
         workstation1: VlanEtherHostSched {
-            @display("p=98,61");
+            parameters:
+            	@display("p=98,61");
+            	oscillator.frequency=1GHz;
         }
         workstation2: VlanEtherHostSched {
-            @display("p=98,143");
+            parameters:
+            	@display("p=98,143");
+            	oscillator.frequency=1GHz;
         }
         workstation3: VlanEtherHostSched {
-            @display("p=98,244");
+            parameters:
+            	@display("p=98,244");
+            	oscillator.frequency=1GHz;
         }
         workstation5: VlanEtherHostQ {
-            @display("p=409,61");
+            parameters:
+            	@display("p=409,61");
+            	oscillator.frequency=1GHz;
         }
         workstation7: VlanEtherHostQ {
-            @display("p=409,244");
+            parameters:            
+            	@display("p=409,244");
+            	oscillator.frequency=1GHz;
         }
         workstation6: VlanEtherHostQ {
-            @display("p=409,149");
+            parameters:
+            	@display("p=409,149");
+            	oscillator.frequency=1GHz;
         }
     connections:
         workstation1.ethg <--> C <--> switch0.ethg[0];
