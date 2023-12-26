@@ -1,13 +1,527 @@
-05:05:13 **** Incremental Build of configuration gcc-release for project nesting ****
+03:41:12 **** Incremental Build of configuration gcc-release for project nesting ****
 make MODE=release -j4 all 
 cd src && make
 make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/src'
-make[1]: Nothing to be done for 'all'.
+nesting/application/ethernet/VlanEtherTrafGen.cc
+nesting/application/ethernet/VlanEtherTrafGenSched.cc
+nesting/common/schedule/HostScheduleBuilder.cc
+nesting/ieee8021q/queue/QueuingFrames.cc
+In file included from nesting/application/ethernet/VlanEtherTrafGenSched.cc:16:
+./nesting/application/ethernet/VlanEtherTrafGenSched.h:88:18: warning: 'nesting::VlanEtherTrafGenSched::sendDelayed' hides overloaded virtual functions [-Woverloaded-virtual]
+    virtual void sendDelayed(cMessage *msg);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:215:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (3 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, int gateid);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:222:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (4 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, const char *gatename, int gateindex=-1);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:228:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (3 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, cGate *outputgate);
+                 ^
+In file included from nesting/application/ethernet/VlanEtherTrafGen.cc:18:
+./nesting/application/ethernet/VlanEtherTrafGenSched.h:88:18: warning: 'nesting::VlanEtherTrafGenSched::sendDelayed' hides overloaded virtual functions [-Woverloaded-virtual]
+    virtual void sendDelayed(cMessage *msg);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:215:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (3 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, int gateid);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:222:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (4 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, const char *gatename, int gateindex=-1);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:228:18: note: hidden overloaded virtual function 'omnetpp::cSimpleModule::sendDelayed' declared here: different number of parameters (3 vs 1)
+    virtual void sendDelayed(cMessage *msg, simtime_t delay, cGate *outputgate);
+                 ^
+nesting/application/ethernet/VlanEtherTrafGenSched.cc:110:46: warning: format specifies type 'int' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+    sprintf(msgname, "pk-%d-%d-%d", getId(), flowId, seqNum);
+                            ~~               ^~~~~~
+                            %lu
+nesting/application/ethernet/VlanEtherTrafGenSched.cc:110:54: warning: format specifies type 'int' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+    sprintf(msgname, "pk-%d-%d-%d", getId(), flowId, seqNum);
+                               ~~                    ^~~~~~
+                               %lu
+nesting/ieee8021q/queue/TransmissionSelection.cc
+nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc
+1 warning generated.
+nesting/ieee8021q/queue/gating/GateController.cc
+3 warnings generated.
+nesting/ieee8021q/queue/gating/TransmissionGate.cc
+In file included from nesting/ieee8021q/queue/TransmissionSelection.cc:16:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:24:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/TransmissionSelection.cc:16:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/TransmissionSelection.cc:16:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc:16:
+In file included from ./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/TransmissionSelection.cc:16:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc:16:
+In file included from ./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc:16:
+In file included from ./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/TransmissionSelection.cc:16:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc:16:
+In file included from ./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:25:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.cc:16:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/GateController.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:27:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/gating/GateController.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/GateController.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/GateController.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/GateController.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+5 warnings generated.
+nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc
+In file included from nesting/ieee8021q/queue/gating/TransmissionGate.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:24:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/gating/TransmissionGate.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/TransmissionGate.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+5 warnings generated.
+nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc
+In file included from nesting/ieee8021q/queue/gating/TransmissionGate.cc:16:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/gating/TransmissionGate.cc:16:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+5 warnings generated.
+nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc
+5 warnings generated.
+nesting/ieee8021q/relay/ForwardingRelayUnit.cc
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.h:25:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/CreditBasedShaper.h:25:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.h:21:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.h:21:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.h:21:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.h:21:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/StrictPriority.h:21:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+5 warnings generated.
+5 warnings generated.
+nesting/linklayer/ethernet/EtherMacFullDuplexCutThrough.cc
+nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/ieee8021q/relay/ForwardingRelayUnit.cc:16:
+In file included from ./nesting/ieee8021q/relay/ForwardingRelayUnit.h:26:
+nesting/ieee8021q/relay/FilteringDatabase.h:62:18: warning: 'handleMessage' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void handleMessage(cMessage* msg);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:111:18: note: overridden virtual function is here
+    virtual void handleMessage(cMessage *msg);
+                 ^
+In file included from nesting/ieee8021q/relay/ForwardingRelayUnit.cc:16:
+./nesting/ieee8021q/relay/ForwardingRelayUnit.h:45:18: warning: 'handleMessage' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void handleMessage(cMessage* msg);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:111:18: note: overridden virtual function is here
+    virtual void handleMessage(cMessage *msg);
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:30:
+In file included from ./nesting/ieee8021q/queue/gating/GateController.h:29:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:24:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc:16:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.cc:16:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+5 warnings generated.
+nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:16:
+./nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.h:34:18: warning: 'initialize' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void initialize(int stage);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/ccomponent.h:225:18: note: overridden virtual function is here
+    virtual void initialize(int stage) {if (stage==0) initialize();}
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:16:
+./nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.h:35:18: warning: 'handleMessage' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void handleMessage(cMessage *msg);
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/csimplemodule.h:111:18: note: overridden virtual function is here
+    virtual void handleMessage(cMessage *msg);
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacFullDuplexCutThrough.cc:16:
+In file included from ./nesting/linklayer/ethernet/EtherMacFullDuplexCutThrough.h:21:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:17:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:21:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:17:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:17:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+2 warnings generated.
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:17:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/linklayer/ethernet/EtherMacLegacySignalEmitter.cc:17:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+nesting/linklayer/framePreemption/PreemptedFrame.cc
+1 warning generated.
+nesting/linklayer/ieee8021q/EnhancedIeee8021qEncap.cc
+7 warnings generated.
+nesting/linklayer/framePreemption/PreemptedFrame_m.cc
+In file included from nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:16:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:21:
+In file included from ../../inet/src/inet/linklayer/ethernet/EtherMacFullDuplex.h:22:
+../../inet/src/inet/linklayer/ethernet/EtherMacBase.h:208:18: warning: 'inet::EtherMacBase::finish' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void finish() override;
+                 ^
+/home/tsn/omnetpp-5.6.1/include/omnetpp/clistener.h:118:18: note: hidden overloaded virtual function 'omnetpp::cIListener::finish' declared here: different number of parameters (2 vs 0)
+    virtual void finish(cComponent *component, simsignal_t signalID) {}
+                 ^
+In file included from nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:16:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+In file included from ./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:25:
+./nesting/ieee8021q/queue/framePreemption/LengthAwareQueue.h:104:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:16:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+In file included from ./nesting/ieee8021q/queue/gating/TransmissionGate.h:29:
+./nesting/ieee8021q/queue/transmissionSelectionAlgorithms/TSAlgorithm.h:91:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:16:
+In file included from ./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:25:
+In file included from ./nesting/ieee8021q/queue/TransmissionSelection.h:23:
+./nesting/ieee8021q/queue/gating/TransmissionGate.h:173:18: warning: 'isExpressQueue' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual bool isExpressQueue();
+                 ^
+./nesting/ieee8021q/queue/framePreemption/IPreemptableQueue.h:34:18: note: overridden virtual function is here
+    virtual bool isExpressQueue() = 0;
+                 ^
+In file included from nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:16:
+./nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.h:100:18: warning: 'packetEnqueued' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+    virtual void packetEnqueued(IPassiveQueue *queue);
+                 ^
+../../inet/src/inet/common/queue/IPassiveQueue.h:91:18: note: overridden virtual function is here
+    virtual void packetEnqueued(IPassiveQueue *queue) = 0;
+                 ^
+nesting/linklayer/framePreemption/EtherMACFullDuplexPreemptable.cc:282:17: warning: unused variable 'hdr' [-Wunused-variable]
+    const auto& hdr = frame->peekAtFront<EthernetMacHeader>();// note: we need to duplicate the frame because we emit a signal with it in endTxPeriod()
+                ^
+6 warnings generated.
+Creating shared library: ../out/clang-release/src/libnesting.so
 make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/src'
 cd simulations && make
 make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/simulations'
 make[1]: Nothing to be done for 'all'.
 make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/nesting/simulations'
 
-05:05:13 Build Finished. 0 errors, 0 warnings. (took 183ms)
+03:41:20 Build Finished. 0 errors, 55 warnings. (took 7s.491ms)
 

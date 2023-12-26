@@ -1,4 +1,4 @@
-05:05:10 **** Incremental Build of configuration release for project inet ****
+03:40:49 **** Incremental Build of configuration release for project inet ****
 make MODE=release -j4 all 
 cd src && make
 make[1]: Entering directory '/home/tsn/omnetpp-5.6.1/workspace/inet/src'
@@ -7,8 +7,31 @@ clang++ -c -std=c++11 -O3 -DNDEBUG=1 -MMD -MP -MF .d  -fPIC  -Wno-deprecated-reg
 *** LINKING with:
 clang++ -shared -fPIC -o ../out/clang-release/src/libINET.so -Wl,--no-as-needed -Wl,--whole-archive  -Wl,--no-whole-archive -loppenvir -loppsim -ldl -lstdc++  -losg -losgText -losgDB -losgGA -losgViewer -losgUtil -lOpenThreads  -losgEarth -losgEarthUtil  -Wl,-rpath,/home/tsn/omnetpp-5.6.1/lib -Wl,-rpath,/lib -Wl,-rpath,.  -L/home/tsn/omnetpp-5.6.1/lib
 Building...
-make[1]: Nothing to be done for 'all-pch'.
+inet/linklayer/ethernet/EtherEncap.cc
+inet/linklayer/ethernet/EtherFrameClassifier.cc
+inet/linklayer/ethernet/EtherMac.cc
+inet/linklayer/ethernet/EtherMacBase.cc
+inet/linklayer/ethernet/EtherMacFullDuplex.cc
+inet/linklayer/ethernet/EthernetHeaderSerializer.cc
+inet/linklayer/ethernet/EthernetProtocolDissector.cc
+inet/linklayer/ethernet/EthernetProtocolPrinter.cc
+inet/linklayer/ethernet/switch/MacRelayUnit.cc
+inet/linklayer/ieee80211/mgmt/Ieee80211MgmtAp.cc
+inet/linklayer/ieee80211/mgmt/Ieee80211MgmtApBase.cc
+inet/linklayer/ieee80211/portal/Ieee80211Portal.cc
+inet/linklayer/ieee8021d/relay/Ieee8021dRelay.cc
+inet/linklayer/ieee8021d/rstp/Rstp.cc
+inet/linklayer/ieee8021d/stp/Stp.cc
+inet/linklayer/ieee8021q/Ieee8021qEncap.cc
+inet/physicallayer/ethernet/EtherPhy.cc
+inet/visualizer/networklayer/NetworkRouteCanvasVisualizer.cc
+inet/visualizer/networklayer/NetworkRouteOsgVisualizer.cc
+inet/visualizer/transportlayer/TransportRouteCanvasVisualizer.cc
+inet/visualizer/transportlayer/TransportRouteOsgVisualizer.cc
+inet/linklayer/ethernet/EtherFrame_m.cc
+inet/linklayer/ethernet/EtherPhyFrame_m.cc
+Creating shared library: ../out/clang-release/src/libINET.so
 make[1]: Leaving directory '/home/tsn/omnetpp-5.6.1/workspace/inet/src'
 
-05:05:12 Build Finished. 0 errors, 0 warnings. (took 1s.950ms)
+03:41:11 Build Finished. 0 errors, 0 warnings. (took 21s.569ms)
 

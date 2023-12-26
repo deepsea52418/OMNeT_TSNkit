@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;nesting/example_teach&apos; to &apos;teach&apos;" description="Rename resource &apos;example_teach&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="example_teach" name="teach" stamp="1703495629695" updateReferences="true"/>
+</session>

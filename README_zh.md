@@ -43,15 +43,9 @@ graph LR
 
 | FlowID | Src | Dst | Size | Period    | Deadline | Jitter   |
 |--------|-----|-----|------|-----------|----------|----------|
-| 0      | 1   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 1      | 2   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
-| 2      | 3   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 3      | 1   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
-| 4      | 2   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 5      | 3   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 6      | 1   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 7      | 2   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 8      | 3   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
+| 0      | 1   | 5   | 500B | 500000ns  | 408400ns | 408400ns |
+| 1      | 2   | 6   | 1200B| 1000000ns | 408400ns | 408400ns |
+| 2      | 3   | 7   | 200B | 200000ns  | 408400ns | 408400ns |
 
 3.  文件目录
 ```
@@ -67,15 +61,21 @@ graph LR
 │               └── teach.ned (Simulated Network Topology)
 └── TSNkit
     ├── data
-    │   └── input
-    │       ├── example_net.csv (Network Topology)
-    │       └── example_task.csv (Flow Information)
-    └── src
-        ├── --DELAY.csv (Flow Delay Information)
-        ├── --GCL.csv (GCL Information)
-        ├── --OFFSET.csv (Flow Send Offset)
-        ├── --QUEUE.csv (Flow Priority Information )
-        └── --ROUTE.csv (Network Routing Information)
+        │  
+        ├── input
+        │    ├─example
+        │       ├─ example_net.csv  (Network Topology)
+        │       ├─ example_task.csv (FLOW Information)
+        │        
+        │          
+        └─ output
+            ├─example
+                 ├─ example-DELAY.csv     (Flow Delay Information)
+                 ├─ example-GCL.csv       (GCL Information)
+                 ├─ example-OFFSET.csv    (Flow Send Offset)
+                 ├─ example-QUEUE.csv     (Flow Priority Information)
+                 ├─ example-ROUTE.csv     (Flow Priority Information)
+
 ```
 
 
@@ -91,7 +91,7 @@ graph LR
 7. 安装TSNkit,具体参考[此链接](https://github.com/ChuanyuXue/tsnkit/blob/main/README.md)
 #### 使用调度算法进行求解
 1. `cd TSNkit/src`
-2. 使用`python -m  tsnkit.models.smt_nw  example_task.csv  example_net.csv`进行求解
+2. 使用`python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example`进行求解，该命令加载input/example中的
 3. 求解完成后，可以在当前目录下看到生成的调度结果文件（GCL.csv，OFFSET.csv等）
 #### 运行仿真
 1. 打开OMNeT++
@@ -110,7 +110,8 @@ graph LR
 >在NeSTiNg仿真框架中，默认采用802.3协议指定的数据帧格式，即完整数据帧大小 = 应用层数据 + 前导码(8B) + 目的地址(6B) + 源地址(6B) + vlanTag(4B) + 长度(2B) + CRC(4B)
 >
 >目前在TSNkit中未考虑帧间间隔问题，需要将`\inet\src\inet\linklayer\ethernet\Ethernet.h`文件中的`INTERFRAME_GAP_BITS`参数由96修改至0
-
+>
+>TSNKit中对于时延的计算减去了源端的发送时延,并且没有减去offset,而omnet中时延的计算是从源端设备开始发送第一个bit开始的，也就是说tsnkit中时延的输出减去offset，再加上源端的传输时延才是omnet中应该出现的时延；
 ## 参与贡献
 
 如果您对该项目有任何意见或建议，欢迎在项目页面提交Issue。感谢您的参与与反馈！
