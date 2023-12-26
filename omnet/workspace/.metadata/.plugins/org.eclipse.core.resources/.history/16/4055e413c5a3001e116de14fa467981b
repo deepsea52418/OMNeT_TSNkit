@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<schedules>
+	<defaultcycle>500us</defaultcycle>
+	<host name="workstation1">
+		<cycle>500us</cycle>
+		<entry>
+			<start>484us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:05</dest>
+			<size>470B</size>
+			<flowId>0</flowId>
+		</entry>
+	</host>
+	<host name="workstation2">
+		<cycle>1000us</cycle>
+		<entry>
+			<start>393.6us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:06</dest>
+			<size>1170B</size>
+			<flowId>1</flowId>
+		</entry>
+	</host>
+	<host name="workstation3">
+		<cycle>200us</cycle>
+		<entry>
+			<start>0us</start>
+			<queue>0</queue>
+			<dest>00:00:00:00:00:07</dest>
+			<size>170B</size>
+			<flowId>2</flowId>
+		</entry>
+	</host>
+	<switch name="switch0">
+		<port id="3">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2.8us</length>
+					<bitvector>00000000</bitvector>
+				</entry>
+				<entry>
+					<length>7.2us</length>
+					<bitvector>00000010</bitvector>
+				</entry>
+				<entry>
+					<length>1990us</length>
+					<bitvector>00000000</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+	<switch name="switch4">
+		<port id="1">
+			<schedule cycleTime="2000us">
+				<entry>
+					<length>2000us</length>
+					<bitvector>11111111</bitvector>
+				</entry>
+			</schedule>
+		</port>
+	</switch>
+</schedules>

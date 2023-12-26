@@ -1,0 +1,116 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+package nesting.simulations.examples;
+
+import ned.DatarateChannel;
+import nesting.node.ethernet.VlanEtherHostQ;
+import nesting.node.ethernet.VlanEtherHostSched;
+import nesting.node.ethernet.VlanEtherSwitchPreemptable;
+
+
+network d_net
+{
+    @display("bgb=761,327");
+    types:
+        channel C extends DatarateChannel
+        {
+            delay = 0.5us;
+            datarate = 1Gbps;
+        }
+    submodules:
+        switch5: VlanEtherSwitchPreemptable {
+            parameters:
+                @display("p=211,142");
+                oscillator.frequency=1GHz;
+            gates:
+                ethg[4];
+        }
+        switch8: VlanEtherSwitchPreemptable {
+            parameters:
+                @display("p=451,142");
+                oscillator.frequency=1GHz;
+            gates:
+                ethg[4];
+        }
+        computer1: VlanEtherHostSched {
+            @display("p=291,50");
+            oscillator.frequency=1GHz;
+        }
+        sensor0: VlanEtherHostSched {
+            @display("p=211,50");
+            oscillator.frequency=1GHz;
+        }
+        sensor10: VlanEtherHostSched {
+            @display("p=211,232");
+            oscillator.frequency=1GHz;
+        }
+        executor2: VlanEtherHostQ {
+            @display("p=369,50");
+            oscillator.frequency=1GHz;
+        }
+        switch6: VlanEtherSwitchPreemptable {
+            parameters:
+                @display("p=291,142");
+                oscillator.frequency=1GHz;
+            gates:
+                ethg[4];
+        }
+        switch7: VlanEtherSwitchPreemptable {
+            parameters:
+                @display("p=369,142");
+                oscillator.frequency=1GHz;
+            gates:
+                ethg[4];
+        }
+        sensor4: VlanEtherHostSched {
+            @display("p=115,143");
+            oscillator.frequency=1GHz;
+        }
+        executor9: VlanEtherHostQ {
+            @display("p=548,143");
+            oscillator.frequency=1GHz;
+        }
+        executor3: VlanEtherHostQ {
+            @display("p=451,50");
+            oscillator.frequency=1GHz;
+        }
+        executor11: VlanEtherHostQ {
+            @display("p=291,232");
+            oscillator.frequency=1GHz;
+        }
+        executor12: VlanEtherHostQ {
+            @display("p=369,232");
+            oscillator.frequency=1GHz;
+        }
+        executor13: VlanEtherHostQ {
+            @display("p=451,232");
+            oscillator.frequency=1GHz;
+        }
+    connections:
+        switch5.ethg[0] <--> C <--> sensor0.ethg;
+        switch5.ethg[1] <--> C <--> sensor4.ethg;
+        switch5.ethg[2] <--> C <--> sensor10.ethg;
+        switch5.ethg[3] <--> C <--> switch6.ethg[1];
+        switch6.ethg[0] <--> C <--> computer1.ethg;
+        switch6.ethg[2] <--> C <--> executor11.ethg;
+        switch6.ethg[3] <--> C <--> switch7.ethg[1];
+        switch7.ethg[0] <--> C <--> executor2.ethg;
+        switch7.ethg[2] <--> C <--> executor12.ethg;
+        switch7.ethg[3] <--> C <--> switch8.ethg[1];
+        switch8.ethg[0] <--> C <--> executor3.ethg;
+        switch8.ethg[2] <--> C <--> executor13.ethg;
+        switch8.ethg[3] <--> C <--> executor9.ethg;
+}
