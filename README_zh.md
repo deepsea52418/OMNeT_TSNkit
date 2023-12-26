@@ -6,8 +6,8 @@
 
 本项目旨在推广TSNkit工具与OMNeT++仿真软件，帮助大家快速入门TSN，并轻松复现TSN经典论文中的算法。
 
-> 对于TSN仿真有多种不同仿真框架，本项目仅以NeSTiNg框架进行示例
->
+> OMNeT++支持多种不同仿真框架，建议根据仿真目标不同选择合适的仿真框架，本项目以NeSTiNg框架进行示例
+> 
 > TSNkit支持多种算法，本项目仅选用SMT-NW（[No-wait Packet Scheduling for IEEE Time-sensitive Networks (TSN)](https://dl.acm.org/doi/10.1145/2997465.2997494)）算法进行演示。更多算法，请参照[此链接](https://tsnkit.readthedocs.io/en/latest/schedule.html)
 
 ## 项目所需要环境
@@ -16,7 +16,7 @@
 + [INET Framework 4.1.2](https://github.com/inet-framework/inet/releases/tag/v4.1.2)
 + [NeSTiNg](https://gitlab.com/ipvs/nesting)&nbsp;&nbsp;&nbsp;&nbsp;![Commit](https://img.shields.io/badge/commit-b7f1df09-blue)
 + [TSNkit](https://github.com/ChuanyuXue/tsnkit)&nbsp;&nbsp;&nbsp;&nbsp;![Commit](https://img.shields.io/badge/commit-1ae494b-blue)
-+ 其他依赖包参考各项目Readme
++ 其他依赖环境参考各项目Readme
 
 ## 代码说明
 
@@ -39,7 +39,7 @@ graph LR
     TSNSwitch2 --- Server2
     TSNSwitch2 --- Server3
 ```
-1.  流信息
+2.  流信息
 
 | FlowID | Src | Dst | Size | Period    | Deadline | Jitter   |
 |--------|-----|-----|------|-----------|----------|----------|
@@ -53,40 +53,70 @@ graph LR
 | 7      | 2   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
 | 8      | 3   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
 
-3.  网络配置信息位于TSNkit/data/input文件夹下,其中XX_task.csv中存有流信息，XX_net.csv中有网络的拓扑信息
-4.  TSNkit生成的调度信息默认位于TSNkit/src文件夹下,也就是调用tsnkit.models.smt_nw的当前目录
-5.  OMNeT++仿真文件位于xxx/xxx文件夹下
+3.  文件目录
+```
+.
+├── omnet
+│   └── workspace
+│       └── nesting
+│           └── teach
+│               ├── xml
+│               │   ├── teach_gcl.xml (Simulated GCL Information)
+│               │   └── teach_Routing.xml (Simulated Routing Information)
+│               ├── _example_teach.ini (Simulated Network Configuration)
+│               └── teach.ned (Simulated Network Topology)
+└── TSNkit
+    ├── data
+    │   └── input
+    │       ├── example_net.csv (Network Topology)
+    │       └── example_task.csv (Flow Information)
+    └── src
+        ├── --DELAY.csv (Flow Delay Information)
+        ├── --GCL.csv (GCL Information)
+        ├── --OFFSET.csv (Flow Send Offset)
+        ├── --QUEUE.csv (Flow Priority Information )
+        └── --ROUTE.csv (Network Routing Information)
+```
 
 
 ## 使用方式
 
+#### 安装
 1. 下载安装Ubuntu 18.04，并安装OMNeT++ 5.6.1
 2. cd [path to your OMNeT++]
-3. git clone https://gitee.com/deepsea52418/omnet_tsnkit.git 
-4. cd TSNkit
-5. python setup.py install
+3. `git clone https://gitee.com/deepsea52418/omnet_tsnkit.git`
+4. `cd OMNET_TSNKIT`
+5. 安装编译INET Framework，具体参考[此链接](https://github.com/inet-framework/inet/blob/master/INSTALL.md)
+6. 安装编译NeSTiNg，具体参考[此链接](https://gitlab.com/ipvs/nesting/-/blob/master/README.md)
+7. 安装TSNkit,具体参考[此链接](https://github.com/ChuanyuXue/tsnkit/blob/main/README.md)
+#### 使用调度算法进行求解
+1. `cd TSNkit/src`
+2. 使用`python -m  tsnkit.models.smt_nw  example_task.csv  example_net.csv`进行求解
+3. 求解完成后，可以在当前目录下看到生成的调度结果文件（GCL.csv，OFFSET.csv等）
+#### 运行仿真
+1. 打开OMNeT++
+2. 选择OMNET_TSNKIT\omnet\workspace作为OMNeT++ 的workspace
+3. 选择nesting\teach\\_example_teach.ini，右键选择`Run As`运行
 
-## 使用调度算法进行求解（以 _smt_nw_ 为例）
-1. 所有的求解模型都位于 TSNkit/src/tsnkit/models目录下
-2. cd TSNkit/src
-3. 调用smt-nw的格式为 smt_nw.py [-h] [name] task net [output] [workers]， task，net分别为对应的流信息和拓扑信息文件的路径,必须配置,  
-output为TSNkit生成的调度信息存放的路径，默认为`./`,也即当前目录
-4. 使用`python -m  tsnkit.models.smt_nw  task.csv  net.csv  `进行求解，，一般位于data/input下
-5. 求解完成后可以在src目录下（或配置的output目录下）看到生成的GCL.csv,OFFSET.csv,ROUTE.csv等调度信息文件
 
-## 使用调度信息文件进行仿真（以此项目中smt_nw算法选择的拓扑和流信息为例）
-1. 主要包含四个文件。拓扑文件为teach.ned；初始化文件为_example_teach.ini；路由表信息文件为teach_Routing.xml;门控信息文件为teach_gcl.xml。
-2. 该项目文件在omnet/workspace/nesting/teach目录下
-3. 右键ini文件运行“Run As”即可
-
+## Tips
+>
+>SMT-NW算法通过指定流发送的偏移时间，实现流的无等待传输。在此过程中，并未涉及到流优先级相关问题，因此将所有流优先级置为0；
+>
+>根据`nesting\src\nesting\ieee8021q\queue\QueuingFrames.h`代码中的定义，在8个可用队列情况下，优先级为0的流映射至`Queueing`模块的1号队列进行传输;
+>
+>在NeSTiNg仿真框架中，默认情况下，仿真节点模块所采用的oscillator子模块频率为1Mhz，仿真时间精度为1μs。为了提高仿真精度，在本项目中，将oscillator模块频率指定为1Ghz，即仿真时间精度为1ns；
+>
+>在NeSTiNg仿真框架中，默认采用802.3协议指定的数据帧格式，即完整数据帧大小 = 应用层数据 + 前导码(8B) + 目的地址(6B) + 源地址(6B) + vlanTag(4B) + 长度(2B) + CRC(4B)
+>
+>目前在TSNkit中未考虑帧间间隔问题，需要将`\inet\src\inet\linklayer\ethernet\Ethernet.h`文件中的`INTERFRAME_GAP_BITS`参数由96修改至0
 
 ## 参与贡献
 
-欢迎通过github与我们联系 
+如果您对该项目有任何意见或建议，欢迎在项目页面提交Issue。感谢您的参与与反馈！
 
 ## 感谢
 
-1.  xxxx
-2.  xxxx
-
-
++  [Chuang Li](https://github.com/chaungLi)
++  [Callin](https://github.com/lxacc)
++  OMNeT++ , INET Framework , NeSTiNg , TSNkit项目贡献者
