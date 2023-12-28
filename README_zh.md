@@ -92,7 +92,7 @@ graph LR
 #### 使用调度算法进行求解
 1. `cd TSNkit/src`
 2. 使用`python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example`进行求解，该命令加载input/example中的
-3. 求解完成后，可以在当前目录下看到生成的调度结果文件（GCL.csv，OFFSET.csv等）
+3. 求解完成后，可以在指定的输出目录"../data/output/example/"下看到生成的调度结果文件（GCL.csv，OFFSET.csv等）
 #### 运行仿真
 1. 打开OMNeT++
 2. 选择OMNET_TSNKIT\omnet\workspace作为OMNeT++ 的workspace
