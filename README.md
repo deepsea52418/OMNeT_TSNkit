@@ -43,15 +43,9 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 
 | FlowID | Src | Dst | Size | Period    | Deadline | Jitter   |
 |--------|-----|-----|------|-----------|----------|----------|
-| 0      | 1   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 1      | 2   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
-| 2      | 3   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 3      | 1   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
-| 4      | 2   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 5      | 3   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 6      | 1   | 7   | 100B | 2000000ns | 408400ns | 408400ns |
-| 7      | 2   | 5   | 100B | 2000000ns | 408400ns | 408400ns |
-| 8      | 3   | 6   | 100B | 2000000ns | 408400ns | 408400ns |
+| 0      | 1   | 5   | 500B | 500000ns  | 408400ns | 408400ns |
+| 1      | 2   | 6   | 1200B| 1000000ns | 408400ns | 408400ns |
+| 2      | 3   | 7   | 200B | 200000ns  | 408400ns | 408400ns |
 
 3. **File Directory**
 ```
@@ -66,16 +60,22 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 │               ├── _example_teach.ini (Simulated Network Configuration)
 │               └── teach.ned (Simulated Network Topology)
 └── TSNkit
-    ├── data
-    │   └── input
-    │       ├── example_net.csv (Network Topology)
-    │       └── example_task.csv (Flow Information)
-    └── src
-        ├── --DELAY.csv (Flow Delay Information)
-        ├── --GCL.csv (GCL Information)
-        ├── --OFFSET.csv (Flow Send Offset)
-        ├── --QUEUE.csv (Flow Priority Information )
-        └── --ROUTE.csv (Network Routing Information)
+    └── data
+        │  
+        ├── input
+        │    └── example
+        │       ├──  example_net.csv  (Network Topology)
+        │       └──  example_task.csv (FLOW Information)
+        │        
+        │          
+        └─ output
+            └── example
+                 ├── example-DELAY.csv     (Flow Delay Information)
+                 ├── example-GCL.csv       (GCL Information)
+                 ├── example-OFFSET.csv    (Flow Send Offset)
+                 ├── example-QUEUE.csv     (Flow Priority Information)
+                 └──  example-ROUTE.csv     (Flow Priority Information)
+
 ```
 ## Usage
 
@@ -89,9 +89,9 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 7. Install TSNkit, specific instructions can be found [here](https://github.com/ChuanyuXue/tsnkit/blob/main/README.md).
 
 #### Solve using Scheduling Algorithm
-1. `cd TSNkit/src`.
-2. Use `python -m tsnkit.models.smt_nw example_task.csv example_net.csv` for solving.
-3. Upon completion, you can find the generated scheduling result files (GCL.csv, OFFSET.csv, etc.) in the current directory.
+1. `cd TSNkit/src`
+2. Use `python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example` for solving, This command loads the network information (net.csv) and flow information (task.csv) in data/input/example for solution
+3. Upon completion, you can find the generated scheduling result files (GCL.csv, OFFSET.csv, etc.) in the "../data/output/example/".
 
 #### Run Simulation
 1. Open OMNeT++.
@@ -109,6 +109,8 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 >In the NeSTiNg simulation framework, the default data frame format specified by the 802.3 protocol is used, where the complete data frame size equals the application layer data + preamble (8B) + destination address (6B) + source address (6B) + vlanTag (4B) + length (2B) + CRC (4B).
 >
 >Currently, frame spacing issues are not considered in TSNkit. You need to modify the `INTERFRAME_GAP_BITS` parameter in the `\inet\src\inet\linklayer\ethernet\Ethernet.h` file from 96 to 0.
+>
+>The calculation of delay in TSNKit subtracts the transmission delay of the source end, and does not subtract the offset, while the calculation of delay in OMNeT starts from the source device starting to send the first bit, which means that the delay in tsnkit The output minus the offset, plus the transmission delay at the source end, is the delay that should appear in OMNeT.
 
 ## Contribution
 

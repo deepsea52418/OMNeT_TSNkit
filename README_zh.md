@@ -60,21 +60,21 @@ graph LR
 │               ├── _example_teach.ini (Simulated Network Configuration)
 │               └── teach.ned (Simulated Network Topology)
 └── TSNkit
-    ├── data
+    └── data
         │  
         ├── input
-        │    ├─example
-        │       ├─ example_net.csv  (Network Topology)
-        │       ├─ example_task.csv (FLOW Information)
+        │    └── example
+        │       ├──  example_net.csv  (Network Topology)
+        │       └──  example_task.csv (FLOW Information)
         │        
         │          
         └─ output
-            ├─example
-                 ├─ example-DELAY.csv     (Flow Delay Information)
-                 ├─ example-GCL.csv       (GCL Information)
-                 ├─ example-OFFSET.csv    (Flow Send Offset)
-                 ├─ example-QUEUE.csv     (Flow Priority Information)
-                 ├─ example-ROUTE.csv     (Flow Priority Information)
+            └── example
+                 ├── example-DELAY.csv     (Flow Delay Information)
+                 ├── example-GCL.csv       (GCL Information)
+                 ├── example-OFFSET.csv    (Flow Send Offset)
+                 ├── example-QUEUE.csv     (Flow Priority Information)
+                 └──  example-ROUTE.csv     (Flow Priority Information)
 
 ```
 
@@ -103,15 +103,15 @@ graph LR
 >
 >SMT-NW算法通过指定流发送的偏移时间，实现流的无等待传输。在此过程中，并未涉及到流优先级相关问题，因此将所有流优先级置为0；
 >
->根据`nesting\src\nesting\ieee8021q\queue\QueuingFrames.h`代码中的定义，在8个可用队列情况下，优先级为0的流映射至`Queueing`模块的1号队列进行传输;
+>根据`nesting\src\nesting\ieee8021q\queue\QueuingFrames.h`代码中的定义，在8个可用队列情况下，优先级为0的流映射至`Queueing`模块的1号队列进行传输；
 >
->在NeSTiNg仿真框架中，默认情况下，仿真节点模块所采用的oscillator子模块频率为1Mhz，仿真时间精度为1μs。为了提高仿真精度，在本项目中，将oscillator模块频率指定为1Ghz，即仿真时间精度为1ns；
+>在NeSTiNg仿真框架中，默认情况下，仿真节点模块所采用的oscillator子模块频率为1Mhz，仿真时间精度为1μs。为了提高仿真精度，在本项目中，将oscillator模块频率指定为1Ghz，即仿真时间精度为1n；
 >
->在NeSTiNg仿真框架中，默认采用802.3协议指定的数据帧格式，即完整数据帧大小 = 应用层数据 + 前导码(8B) + 目的地址(6B) + 源地址(6B) + vlanTag(4B) + 长度(2B) + CRC(4B)
+>在NeSTiNg仿真框架中，默认采用802.3协议指定的数据帧格式，即完整数据帧大小 = 应用层数据 + 前导码(8B) + 目的地址(6B) + 源地址(6B) + vlanTag(4B) + 长度(2B) + CRC(4B) ；
 >
->目前在TSNkit中未考虑帧间间隔问题，需要将`\inet\src\inet\linklayer\ethernet\Ethernet.h`文件中的`INTERFRAME_GAP_BITS`参数由96修改至0
+>目前在TSNkit中未考虑帧间间隔问题，需要将`\inet\src\inet\linklayer\ethernet\Ethernet.h`文件中的`INTERFRAME_GAP_BITS`参数由96修改至0；
 >
->TSNKit中对于时延的计算减去了源端的发送时延,并且没有减去offset,而omnet中时延的计算是从源端设备开始发送第一个bit开始的，也就是说tsnkit中时延的输出减去offset，再加上源端的传输时延才是omnet中应该出现的时延；
+>TSNKit中对于延迟的计算减去了源端的发送时延,并且没有减去offset,而omnet中时延的计算是从源端设备开始发送第一个bit开始的，也就是说tsnkit中时延的输出减去offset，再加上源端的传输时延才是omnet中应该出现的时延
 ## 参与贡献
 
 如果您对该项目有任何意见或建议，欢迎在项目页面提交Issue。感谢您的参与与反馈！
