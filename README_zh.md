@@ -91,7 +91,7 @@ graph LR
 7. 安装TSNkit,具体参考[此链接](https://github.com/ChuanyuXue/tsnkit/blob/main/README.md)
 #### 使用调度算法进行求解
 1. `cd TSNkit/src`
-2. 使用`python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example`进行求解，该命令加载input/example中的
+2. 使用`python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example`进行求解，该命令加载data/input/example中的网络信息(net.csv)和流信息(task.csv)进行求解
 3. 求解完成后，可以在指定的输出目录"../data/output/example/"下看到生成的调度结果文件（GCL.csv，OFFSET.csv等）
 #### 运行仿真
 1. 打开OMNeT++
