@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project addresses the scheduling and simulation challenges in Time-Sensitive Networks (TSN), utilizing [TSNkit](https://github.com/ChuanyuXue/tsnkit) to generate network scheduling schemes. The simulation is conducted using the NeSTiNg framework, allowing the verification of scheduling schemes. A [video link](https://space.bilibili.com/35942145) is available for the project.
+This project addresses the scheduling and simulation challenges in Time-Sensitive Networks (TSN), utilizing [TSNkit](https://github.com/ChuanyuXue/tsnkit) to generate network scheduling schemes. The simulation is conducted using the NeSTiNg framework, allowing the verification of scheduling schemes. A [video link](https://www.bilibili.com/video/BV1zW4y1P7Uw) is available for the project.
 
 The primary goal of this project is to promote the TSNkit tool and OMNeT++ simulation software, facilitating a quick introduction to TSN. Moreover, it aims to make the replication of classic TSN algorithms from research papers more accessible.
 
@@ -65,7 +65,7 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
         ├── input
         │    └── example
         │       ├──  example_net.csv  (Network Topology)
-        │       └──  example_task.csv (FLOW Information)
+        │       └──  example_task.csv (Flow Information)
         │        
         │          
         └─ output
@@ -74,7 +74,7 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
                  ├── example-GCL.csv       (GCL Information)
                  ├── example-OFFSET.csv    (Flow Send Offset)
                  ├── example-QUEUE.csv     (Flow Priority Information)
-                 └──  example-ROUTE.csv     (Flow Priority Information)
+                 └── example-ROUTE.csv     (Flow Routing Information)
 
 ```
 ## Usage
@@ -90,7 +90,7 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 
 #### Solve using Scheduling Algorithm
 1. `cd TSNkit/src`
-2. Use `python -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example` for solving, This command loads the network information (net.csv) and flow information (task.csv) in data/input/example for solution
+2. Use `python3 -m  tsnkit.models.smt_nw  ../data/input/example/example_task.csv  ../data/input/example/example_net.csv  ../data/output/example` for solving, This command loads the network information (net.csv) and flow information (task.csv) in data/input/example for solution
 3. Upon completion, you can find the generated scheduling result files (GCL.csv, OFFSET.csv, etc.) in the "../data/output/example/".
 
 #### Run Simulation
