@@ -56,8 +56,8 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 │           └── teach
 │               ├── xml
 │               │   ├── teach_gcl.xml (Simulated GCL Information)
-│               │   └── teach_Routing.xml (Simulated Routing Information)
-│               ├── _example_teach.ini (Simulated Network Configuration)
+│               │   └── teach_routing.xml (Simulated Routing Information)
+│               ├── example_teach.ini (Simulated Network Configuration)
 │               └── teach.ned (Simulated Network Topology)
 └── TSNkit
     └── data
@@ -96,7 +96,7 @@ The primary goal of this project is to promote the TSNkit tool and OMNeT++ simul
 #### Run Simulation
 1. Open OMNeT++.
 2. Choose OMNET_TSNKIT\omnet\workspace as the OMNeT++ workspace.
-3. Select nesting\teach\\_example_teach.ini, right-click, and choose `Run As` to execute.
+3. Select nesting\teach\\example_teach.ini, right-click, and choose `Run As` to execute.
 
 ## Tips
 >

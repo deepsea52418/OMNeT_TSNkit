@@ -65,16 +65,16 @@ network teach
             	@display("p=409,61");
             	oscillator.frequency=1GHz;
         }
-        workstation7: VlanEtherHostQ {
-            parameters:            
-            	@display("p=409,244");
-            	oscillator.frequency=1GHz;
-        }
         workstation6: VlanEtherHostQ {
             parameters:
             	@display("p=409,149");
             	oscillator.frequency=1GHz;
         }
+        workstation7: VlanEtherHostQ {
+            parameters:            
+            	@display("p=409,244");
+            	oscillator.frequency=1GHz;
+        }      
     connections:
         workstation1.ethg <--> C <--> switch0.ethg[0];
         workstation2.ethg <--> C <--> switch0.ethg[1];

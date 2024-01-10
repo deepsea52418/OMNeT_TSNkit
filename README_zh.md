@@ -56,8 +56,8 @@ graph LR
 │           └── teach
 │               ├── xml
 │               │   ├── teach_gcl.xml (Simulated GCL Information)
-│               │   └── teach_Routing.xml (Simulated Routing Information)
-│               ├── _example_teach.ini (Simulated Network Configuration)
+│               │   └── teach_routing.xml (Simulated Routing Information)
+│               ├── example_teach.ini (Simulated Network Configuration)
 │               └── teach.ned (Simulated Network Topology)
 └── TSNkit
     └── data
@@ -96,7 +96,7 @@ graph LR
 #### 运行仿真
 1. 打开OMNeT++
 2. 选择OMNET_TSNKIT\omnet\workspace作为OMNeT++ 的workspace
-3. 选择nesting\teach\\_example_teach.ini，右键选择`Run As`运行
+3. 选择nesting\teach\\example_teach.ini，右键选择`Run As`运行
 
 
 ## Tips
